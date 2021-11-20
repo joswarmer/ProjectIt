@@ -111,8 +111,11 @@ export function makeConstructor(hasSuper: boolean, allProps: PiProperty[]): stri
                     : "super(id);"
                     }
                     ${allPrimitiveProps.length !== 0 ?
-                        `${allPrimitiveProps.map(p => 
-                            `makeObservable(this, {"${Names.primitivePropertyField(p)}": observable})`
+                        `${allPrimitiveProps.map(p =>
+                            (p.isList ?
+                                `makeObservable(this, {"${p.name}": observable})`:
+                                `makeObservable(this, {"${Names.primitivePropertyField(p)}": observable})`
+                            )
                         ).join("\n")}
                         `       
                     : ``
