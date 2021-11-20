@@ -44,6 +44,7 @@
         modelNames,
         newUnitDialogVisible,
         openModelDialogVisible,
+        openMpsModelDialogVisible,
         deleteModelDialogVisible,
         unitNames
     } from "../webapp-ts-utils/WebappStore";
@@ -153,6 +154,36 @@
         }
     }
 
+    // new model menuitem
+    const openMPS = async () => {
+        const answer = await fetch(`http://localhost:2904/models/accenture.study.gen.model.example`);
+        // alert(answer);
+        const text = await answer.text();
+        // alert(text);
+        const msg = JSON.parse(text)
+        if (msg["success"] === false) {
+            alert("data not obtained: " + msg["message"]);
+            return;
+        }else {
+            const roots: Object[] = msg["value"]["roots"];
+            $modelNames = roots.map(root => {
+                const conceptParts = (root["concept"] as string).split('.');
+                const concept = conceptParts[conceptParts.length-1];
+                return (!!root["name"] ? root["name"] : "no name") + " (" + concept + ")";
+            });
+        }
+        const data = msg.value;
+        // document.getElementById("title").innerHTML = data.properties["name"];
+        // // get list of models from server
+        // ServerCommunication.getInstance().loadModelList((names: string[]) => {
+        //     if (names.length > 0) {
+        //         $modelNames = names;
+        //     }
+            $openMpsModelDialogVisible = true;
+        // });
+    }
+
+
     // the content of this menu
     let activatorTitle: string = "File";
     // TODO should we disable import when no parser is available??
@@ -162,6 +193,7 @@
         {title: 'Save Current Unit', action: saveUnit, id: 5},
         {title: 'Delete Model', action: deleteModel, id: 6},
         {title: '(Experimental) Import Unit(s)...', action: importUnit, id: 7},
+        {title: '(TODO) Open MPS model', action: openMPS, id: 8}
     ];
 
     // the styling of the menu activator

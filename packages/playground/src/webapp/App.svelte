@@ -12,6 +12,7 @@
 
 <!-- dialogs and the user message snackbar -->
 <OpenModelDialog />
+<OpenMpsModelDialog />
 <NewUnitDialog />
 <DeleteUnitDialog />
 <DeleteModelDialog />
@@ -88,6 +89,7 @@
 	import { ServerCommunication } from "./server/ServerCommunication";
 	import DeleteUnitDialog from "./menu/DeleteUnitDialog.svelte";
 	import DeleteModelDialog from "./menu/DeleteModelDialog.svelte";
+	import OpenMpsModelDialog from "./menu/OpenMpsModelDialog.svelte";
 
 	const MAX_WIDTH_SMALL_VIEWPORT = 600;
 

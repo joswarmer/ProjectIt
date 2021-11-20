@@ -1,9 +1,18 @@
-import { IObservableValue, IArrayWillChange, IArrayWillSplice, observable, intercept, runInAction } from "mobx";
+import {
+    IObservableValue,
+    IArrayWillChange,
+    IArrayWillSplice,
+    observable,
+    intercept,
+    runInAction,
+    makeObservable
+} from "mobx";
 // import { ObservableValue } from "mobx";
 import "reflect-metadata";
 
 import { DecoratedModelElement } from "./DecoratedModelElement";
 import { ModelInfo } from "./ModelInfo";
+import { ChangeManager } from "./ChangeManager";
 
 export const MODEL_PREFIX = "_PI_";
 export const MODEL_PREFIX_LENGTH = MODEL_PREFIX.length;
@@ -101,6 +110,23 @@ export function model(target: Function) {
     ModelInfo.addClass(target.name, target);
 }
 
+export function makeObservablePrimitive(target: DecoratedModelElement, propertyKey: string | symbol) {
+    const getter = function(this: any) {
+        return this[propertyKey];
+    };
+    const setter = function(this: any, val: DecoratedModelElement) {
+        ChangeManager.it.setPrimitive(propertyKey);
+        this[propertyKey] = val;
+    };
+    // tslint:disable no-unused-expression
+    Reflect.deleteProperty(target, propertyKey);
+    Reflect.defineProperty(target, propertyKey, {
+        get: getter,
+        set: setter,
+        configurable: true
+    });
+    makeObservable(this, {propertyKey: observable})
+}
 /**
  *
  * This property decorator can be used to decorate properties of type ModelElement.
@@ -124,6 +150,7 @@ export function observablepart(target: DecoratedModelElement, propertyKey: strin
     };
 
     const setter = function(this: any, val: DecoratedModelElement) {
+        ChangeManager.it.setPart(propertyKey);
         let storedObserver = this[privatePropertyKey] as IObservableValue<DecoratedModelElement>;
         const storedValue = storedObserver ? storedObserver.get() : null;
         // Clean container of current part
@@ -206,6 +233,7 @@ function willChange(
     switch (change.type) {
         // console.log("no change");
         case "update":
+            ChangeManager.it.update(change as IArrayWillChange);
             const newValue = change.newValue;
             const oldValue = change.object[change.index];
             if (newValue === oldValue) {
@@ -233,6 +261,7 @@ function willChange(
             }
             break;
         case "splice":
+            ChangeManager.it.splice(change as IArrayWillSplice);
             let index: number = change.index;
             const removedCount: number = change.removedCount;
             const added: DecoratedModelElement[] = change.added;
