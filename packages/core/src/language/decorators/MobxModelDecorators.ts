@@ -110,23 +110,6 @@ export function model(target: Function) {
     ModelInfo.addClass(target.name, target);
 }
 
-export function makeObservablePrimitive(target: DecoratedModelElement, propertyKey: string | symbol) {
-    const getter = function(this: any) {
-        return this[propertyKey];
-    };
-    const setter = function(this: any, val: DecoratedModelElement) {
-        ChangeManager.it.setPrimitive(propertyKey);
-        this[propertyKey] = val;
-    };
-    // tslint:disable no-unused-expression
-    Reflect.deleteProperty(target, propertyKey);
-    Reflect.defineProperty(target, propertyKey, {
-        get: getter,
-        set: setter,
-        configurable: true
-    });
-    makeObservable(this, {propertyKey: observable})
-}
 /**
  *
  * This property decorator can be used to decorate properties of type ModelElement.

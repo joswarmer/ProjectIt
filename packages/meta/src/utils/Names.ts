@@ -1,6 +1,6 @@
 import {
     PiClassifier, PiConcept, PiInterface,
-    PiLanguage
+    PiLanguage, PiPrimitiveProperty
 } from "../languagedef/metalanguage";
 import { PiUnitDescription } from "../languagedef/metalanguage/PiLanguage";
 
@@ -130,6 +130,18 @@ export class Names {
 
     public static classifier(concept: PiClassifier): string {
         return this.startWithUpperCase(concept?.name);
+    }
+
+    public static primitivePropertyField(property: PiPrimitiveProperty): string {
+        return "$$" + property.name;
+    }
+
+    public static primitivePropertyGetter(property: PiPrimitiveProperty): string {
+        return property.name;
+    }
+
+    public static primitivePropertySetter(property: PiPrimitiveProperty): string {
+        return property.name;
     }
 
     public static interface(interf: PiInterface): string {
