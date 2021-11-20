@@ -22,7 +22,7 @@ export class UnitTemplate {
         const needsObservable = unitDescription.primProperties.length > 0;
         const extendsClass = "MobxModelElementImpl";
         const modelImports = this.findModelImports(unitDescription, myName);
-        const coreImports = this.findMobxImports(unitDescription).concat(["PiModelUnit", "PiUtils"]);
+        const coreImports = this.findMobxImports(unitDescription).concat(["PiModelUnit", "PiUtils", "ChangeManager"]);
         const metaType = Names.metaType(language);
 
         // TODO remove unused imports from template

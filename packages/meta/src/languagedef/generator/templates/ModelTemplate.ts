@@ -22,7 +22,7 @@ export class ModelTemplate {
         const language = modelDescription.language;
         const myName = Names.classifier(modelDescription);
         const extendsClass = "MobxModelElementImpl";
-        const coreImports = this.findMobxImports(modelDescription).concat(["PiModel", "Language", "PiUtils"]);
+        const coreImports = this.findMobxImports(modelDescription).concat(["PiModel", "Language", "PiUtils", "ChangeManager"]);
         const modelImports = this.findModelImports(modelDescription, myName);
         const metaType = Names.metaType(language);
 

@@ -133,8 +133,7 @@ export class Names {
     }
 
     public static primitivePropertyField(property: PiPrimitiveProperty): string {
-        // return "$$" + property.name;
-        return property.name;
+        return "$$" + property.name;
     }
 
     public static primitivePropertyGetter(property: PiPrimitiveProperty): string {

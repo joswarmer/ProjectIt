@@ -64,7 +64,20 @@ export function makePrimitiveProperty(property: PiPrimitiveProperty): string {
             initializer = "= []";
         }
     }
-    return `${property.name} : ${getBaseTypeAsString(property)}${arrayType} ${initializer}; \t${comment}`;
+    if (property.isList) {
+        return `${property.name} : ${getBaseTypeAsString(property)}${arrayType} ${initializer}; \t${comment}`;
+    } else {
+        // Primitive properties that are not a list have a getter and a setter.
+        return `${Names.primitivePropertyField(property)} : ${getBaseTypeAsString(property)}${arrayType} ${initializer}; \t${comment}
+                
+                set ${Names.primitivePropertySetter(property)}(value: ${getBaseTypeAsString(property)}) {
+                    ChangeManager.it.setPrimitive(this, "${property.name}");
+                    this.${Names.primitivePropertyField(property)} = value;
+                }
+                get ${Names.primitivePropertyGetter(property)}() {
+                    return this.${Names.primitivePropertyField(property)};
+                }`;
+    }
 }
 
 export function makePartProperty(property: PiConceptProperty): string {
