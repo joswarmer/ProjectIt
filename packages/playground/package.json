@@ -14,6 +14,7 @@
     "clean": "rm src/example/*/*/*.js && rm src/example/*/*/*.js.map",
     "graphviz":	    "bash ../../scripts/projectit-dev.sh -v all -d src/graphviz/defs -o src/graphviz",
     "example": 	    "bash ../../scripts/projectit-dev.sh -v all -d src/example/defs -o src/example",
+    "mps":        "bash ../../scripts/projectit-dev.sh -v all -d src/mps/defs -o src/mps",
     "rules":        "bash ../../scripts/projectit-dev.sh -v all -d src/rules-language/defs -o src/rules-language",
     "watch-example":"bash ../../scripts/projectit-dev.sh -w -v all -d src/example/defs -o src/example",
     "ex-parser":    "bash ../../scripts/projectit-dev.sh -v parse-it -d src/example/defs -o src/example",
