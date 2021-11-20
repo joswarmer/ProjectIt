@@ -1,0 +1,41 @@
+language MyExport
+
+/* THIS IS A MOCK CONCEPT FOR A TESt */
+model MPS  {
+    public name: identifier;
+	root: org_projectit_test_structure_RootConcept;
+}
+concept org_projectit_test_structure_MockConcept base jetbrains_mps_lang_core_structure_BaseConcept implements org_projectit_test_structure_MockInterface {
+    property20: org_projectit_test_structure_EnumMock; 
+    property40: boolean; 
+    property60: number; 
+    property80: string; 
+    property90: string; 
+    property101: string;
+    public name: identifier;
+}
+/* SOME DESCRIPTION HERE */
+concept org_projectit_test_structure_ConceptWithNameProp base jetbrains_mps_lang_core_structure_BaseConcept {
+    name: identifier; 
+}
+binary expression org_projectit_test_structure_PlusExpression base org_projectit_test_structure_BinaryExpression {
+    priority =10;
+}
+modelunit org_projectit_test_structure_RootConcept  {
+    public name: identifier;
+    reference ref?: org_projectit_test_structure_MockConcept;
+    mock?: org_projectit_test_structure_MockConcept;
+    mock2: org_projectit_test_structure_MockInterface[];
+}
+interface org_projectit_test_structure_MockInterface {
+}
+abstract binary expression org_projectit_test_structure_BinaryExpression base org_projectit_test_structure_Expression {
+    left: org_projectit_test_structure_Expression;
+    right: org_projectit_test_structure_Expression;
+}
+expression org_projectit_test_structure_StringLiteralExpression base org_projectit_test_structure_Expression {
+    value: string; 
+}
+abstract expression org_projectit_test_structure_Expression base jetbrains_mps_lang_core_structure_BaseConcept {
+}
+//limited org_projectit_test_structure_EnumMock { Mock_1; Mock_42; NoMockAtAll; }

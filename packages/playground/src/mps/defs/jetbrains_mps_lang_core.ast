@@ -1,0 +1,10 @@
+language MyExport
+
+abstract concept jetbrains_mps_lang_core_structure_Attribute base jetbrains_mps_lang_core_structure_BaseConcept {
+}
+abstract concept jetbrains_mps_lang_core_structure_BaseConcept {
+    shortDescription: string; 
+    virtualPackage: string; 
+    smodelAttribute?: jetbrains_mps_lang_core_structure_Attribute[];
+}
+limited org_projectit_test_structure_EnumMock { Mock_1; Mock_42; NoMockAtAll; }
