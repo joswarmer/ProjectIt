@@ -12,7 +12,7 @@ const ModelUnitInterfacePostfix: string = "Public";
 
 export class ServerCommunication implements IServerCommunication {
     static serial: GenericModelSerializer = new GenericModelSerializer();
-    static instance: ServerCommunication;
+    private static instance: ServerCommunication;
 
     static getInstance() : ServerCommunication {
         if (!(!!ServerCommunication.instance)) {
@@ -111,7 +111,7 @@ export class ServerCommunication implements IServerCommunication {
      * @param loadCallback
      */
     async loadModelUnit(modelName: string, unitName: string, loadCallback: (piUnit: PiNamedElement) => void) {
-        // LOGGER.log(`ServerCommunication.loadModelUnit ${unitName}`);
+        LOGGER.log(`ServerCommunication.loadModelUnit ${unitName}`);
         if (!!unitName && unitName !== "") {
             try {
                 const res = await axios.get(`${SERVER_URL}getModelUnit?folder=${modelName}&name=${unitName}`);
