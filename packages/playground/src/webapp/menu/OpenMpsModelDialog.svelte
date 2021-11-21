@@ -39,6 +39,8 @@
 		initializing
 	} from "../webapp-ts-utils/WebappStore";
 	import {EditorCommunication} from "../editor/EditorCommunication";
+	import { MpsServerCommunication } from "../server/MpsServerCommunication";
+	import { ServerCommunication } from "../server/ServerCommunication";
 
 	let modal: boolean = true; // TODO from FileMenu modal must be set to false
 	let internalSelected: string = "";
@@ -64,6 +66,7 @@
 
 	const handleSubmit = () => {
 		let comm = EditorCommunication.getInstance();
+		comm.serverCommunication = MpsServerCommunication.getInstance();
 		if (newNameOk()) {
 			comm.newModel(newName);
 			resetVariables();
@@ -71,6 +74,7 @@
 			comm.openModel(internalSelected);
 			resetVariables();
 		}
+		// comm.serverCommunication = ServerCommunication.getInstance();
 	}
 
 	const handleKeydown = (event) => {

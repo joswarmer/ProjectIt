@@ -10,7 +10,7 @@ const modelUnitInterfacePostfix: string = "Public";
 
 export class ServerCommunication implements IServerCommunication {
     static serial: GenericModelSerializer = new GenericModelSerializer();
-    static instance: ServerCommunication;
+    private static instance: ServerCommunication;
 
     static getInstance(): ServerCommunication {
         if (!(!!ServerCommunication.instance)) {

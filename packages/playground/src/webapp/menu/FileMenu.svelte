@@ -156,7 +156,9 @@
 
     // new model menuitem
     const openMPS = async () => {
-        const answer = await fetch(`http://localhost:2904/models/accenture.study.gen.model.example`);
+        // TODO Thiss model URL is fixed for now
+        const answer = await fetch(`http://localhost:2904/modules/org.projectit.mps.structure.to.ast.example`);
+        // const answer = await fetch(`http://localhost:2904/modules`);
         // alert(answer);
         const text = await answer.text();
         // alert(text);
@@ -165,11 +167,11 @@
             alert("data not obtained: " + msg["message"]);
             return;
         }else {
-            const roots: Object[] = msg["value"]["roots"];
-            $modelNames = roots.map(root => {
-                const conceptParts = (root["concept"] as string).split('.');
+            const roots: Object[] = msg["value"]["models"];
+            $modelNames = roots.map(model => {
+                const conceptParts = (model["qualifiedName"] as string).split('.');
                 const concept = conceptParts[conceptParts.length-1];
-                return (!!root["name"] ? root["name"] : "no name") + " (" + concept + ")";
+                return (!!model["qualifiedName"] ? model["qualifiedName"] : "no name"+ " (" + concept + ")");
             });
         }
         const data = msg.value;

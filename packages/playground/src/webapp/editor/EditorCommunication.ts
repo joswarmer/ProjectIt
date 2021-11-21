@@ -226,6 +226,7 @@ export class EditorCommunication {
                 // load all others units as interfaces
                 let first: boolean = true;
                 for (const unitName of unitNames) {
+                    LOGGER.log("load unit: " + unitName);
                     if (first) {
                         serverCommunication.loadModelUnit( modelName, unitName, (unit: PiNamedElement) => {
                             this.currentModel.addUnit(unit);
