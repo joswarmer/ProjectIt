@@ -130,7 +130,7 @@ export class EditorCommunication {
      * @private
      */
     private createNewUnit(newName: string, unitType: string) {
-        LOGGER.log("private createNewUnit called, unitType: " + unitType);
+        LOGGER.log("private createNewUnit called, unitType: " + unitType + " name: "+ newName);
         // save the old current unit, if there is one
         this.saveCurrentUnit();
         // create a new unit and add it to the current model
