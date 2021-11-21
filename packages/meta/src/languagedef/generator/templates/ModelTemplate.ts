@@ -194,11 +194,11 @@ export class ModelTemplate {
                         switch (type) {
                         ${language.modelConcept.allParts().map(part =>
             `${part.isList ?
-                `case "${part.type.referred.name}": {
+                `case "${Names.classifier(part.type.referred)}": {
                                     return this.${part.name};
                                 }`
                 :
-                `case "${part.type.referred.name}": {
+                `case "${Names.classifier(part.type.referred)}": {
                                     let result : ${Names.modelunit(language)}[] = [];
                                     result.push(this.${part.name});
                                     return result;

@@ -122,7 +122,7 @@ export class ProjectionTemplate {
 
                     switch( exp.piLanguageConcept() ) { 
                         ${allClassifiers.map(c => `
-                        case "${c.name}" : return this.${Names.projectionFunction(c)} (exp as ${Names.classifier(c)});`
+                        case "${Names.classifier(c)}" : return this.${Names.projectionFunction(c)} (exp as ${Names.classifier(c)});`
                         ).join("  ")}
                     }
                     // nothing fits

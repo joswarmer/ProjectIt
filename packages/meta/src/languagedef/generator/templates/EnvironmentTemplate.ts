@@ -85,9 +85,9 @@ export class EnvironmentTemplate {
             writer: ${Names.PiWriter} = new ${Names.writer(language)}();
             reader: ${Names.PiReader} = new ${Names.reader(language)}();
             languageName: string = "${language.name}";
-            unitNames: string[] = [${language.modelConcept.unitTypes().map(unit => `"${unit.name}"`)}];
+            unitNames: string[] = [${language.modelConcept.unitTypes().map(unit => `"${Names.classifier(unit)}"`)}];
             fileExtensions: Map<string, string> = new Map([
-                ${language.modelConcept.unitTypes().map(unit => `["${unit.name}", ".${unit.fileExtension}"]`)}
+                ${language.modelConcept.unitTypes().map(unit => `["${Names.classifier(unit)}", ".${unit.fileExtension}"]`)}
             ]);
         }`;
     }
