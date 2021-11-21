@@ -60,6 +60,8 @@ export interface IServerCommunication {
      */
     loadModelList(modelListCallback: (names: string[]) => void);
 
+    loadUnitList(modelName: string, modelListCallback: (names: string[]) => void);
+
     /**
      * Reads all interfaces for all available units of model 'modelName' and calls loadCallback for each.
      * @param languageName
