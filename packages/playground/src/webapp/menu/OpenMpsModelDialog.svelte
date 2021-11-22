@@ -1,5 +1,5 @@
 <!-- --bg-panel and --divider are parameters set by the svelte-mui library -->
-<Dialog style="width:{290}; --bg-panel: var(--theme-colors-inverse_color); --divider:var(--theme-colors-color)"
+<Dialog style="width:var(--pi-dialog-width); --bg-panel: var(--theme-colors-inverse_color); --divider:var(--theme-colors-color)"
 		bind:modal={modal}
 		bind:visible={$openMpsModelDialogVisible}
 		on:keydown={handleKeydown}>
