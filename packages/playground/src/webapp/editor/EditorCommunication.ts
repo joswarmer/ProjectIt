@@ -263,7 +263,7 @@ export class EditorCommunication {
      * Reads the unit called 'newUnit' from the server and shows it in the editor
      * @param newUnit
      */
-    async openModelUnit(newUnit: PiNamedElement) {
+    openModelUnit(newUnit: PiNamedElement) {
         LOGGER.log("openModelUnit called, unitName: " + newUnit.name);
         if (!!this.currentUnit && newUnit.name === this.currentUnit.name ) {
             // the unit to open is the same as the unit in the editor, so we are doing nothing

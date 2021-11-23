@@ -62,7 +62,7 @@
 		}
 	}
 
-	const handleSubmit = () => {
+	const handleSubmit = async () => {
 		let comm = EditorCommunication.getInstance();
 		if (newNameOk()) {
 			comm.newModel(newName);

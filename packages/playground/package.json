@@ -69,7 +69,8 @@
     "kotlin": "^1.5.21",
     "sirv-cli": "^1.0.0",
     "svelte-mui": "^0.3.3-7",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "rpc-websockets": "^7.4.16"
   },
   "resolutions": {
     "electron": "^11.0.1"
