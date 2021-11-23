@@ -238,14 +238,14 @@ export class PiLanguageChecker extends PiLangAbstractChecker {
             if (!piProperty.isPart) {
                 // it is a reference, so check whether the type has a name by which it can be referred
                 const nameProperty = realType.nameProperty();
-                this.nestedCheck({
-                    check: !!nameProperty,
-                    error: `Type '${realType.name}' cannot be used as a reference, because it has no name property ${this.location(piProperty.type)}.`,
-                    whenOk: () => {
-                        this.simpleCheck(nameProperty.type.referred === PiPrimitiveType.identifier,
-                            `Type '${realType.name}' cannot be used as a reference, because its name property is not of type 'identifier' ${this.location(piProperty.type)}.`);
-                    }
-                });
+                // this.nestedCheck({
+                //     check: !!nameProperty,
+                //     error: `Type '${realType.name}' cannot be used as a reference, because it has no name property ${this.location(piProperty.type)}.`,
+                //     whenOk: () => {
+                //         this.simpleCheck(nameProperty.type.referred === PiPrimitiveType.identifier,
+                //             `Type '${realType.name}' cannot be used as a reference, because its name property is not of type 'identifier' ${this.location(piProperty.type)}.`);
+                //     }
+                // });
             }
         }
     }
@@ -289,8 +289,10 @@ export class PiLanguageChecker extends PiLangAbstractChecker {
                 check: !!element.name,
                 error: `Property should have a name ${this.location(element)}.`,
                 whenOk: () => {
-                    this.simpleCheck(!(reservedWordsInTypescript.includes(element.name.toLowerCase())),
-                        `Property may not have a name that is equal to a reserved word in TypeScript ('${element.name}') ${this.location(element)}.`);
+                    if(false) {
+                        this.simpleCheck(!(reservedWordsInTypescript.includes(element.name.toLowerCase())),
+                            `Property may not have a name that is equal to a reserved word in TypeScript ('${element.name}') ${this.location(element)}.`);
+                    }
                     // TODO determine whether the following check is important
                     // this.simpleCheck(!(piReservedWords.includes(element.name.toLowerCase())),
                     //     `Property may not have a name that is equal to a reserved word ('${element.name}') ${this.location(element)}.`);

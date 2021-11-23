@@ -157,7 +157,7 @@
     // new model menuitem
     const openMPS = async () => {
         // TODO Thiss model URL is fixed for now
-        const answer = await fetch(`http://localhost:2904/modules/org.projectit.mps.structure.to.ast.example`);
+        const answer = await fetch(URL_MODEL);
         // const answer = await fetch(`http://localhost:2904/modules`);
         // alert(answer);
         const text = await answer.text();

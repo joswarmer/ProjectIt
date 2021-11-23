@@ -11,8 +11,14 @@ import { ServerCommunication } from "./server/ServerCommunication";
 // import { OctopusEnvironment } from "../octopus/environment/gen/OctopusEnvironment";
 // export const editorEnvironment: PiEnvironment = OctopusEnvironment.getInstance();
 
-import { ExampleEnvironment } from "../example/environment/gen/ExampleEnvironment";
-export const editorEnvironment: PiEnvironment = ExampleEnvironment.getInstance();
+// import { ExampleEnvironment } from "../example/environment/gen/ExampleEnvironment";
+// export const editorEnvironment: PiEnvironment = ExampleEnvironment.getInstance();
+
+// import { MyExportEnvironment } from "../mps/environment/gen/MyExportEnvironment";
+// export const editorEnvironment: PiEnvironment = MyExportEnvironment.getInstance();
+
+import { StudyEnvironment } from "../mps/environment/gen/StudyEnvironment";
+export const editorEnvironment: PiEnvironment = StudyEnvironment.getInstance();
 
 // import { CalculatorEnvironment } from "../calculator/environment/gen/CalculatorEnvironment";
 // export const editorEnvironment: PiEnvironment = CalculatorEnvironment.getInstance();
