@@ -2,7 +2,7 @@ import { IArrayWillChange, IArrayWillSplice } from "mobx";
 import { MODEL_NAME } from "./MobxModelDecorators";
 import { PiLogger } from "../../util/PiLogging";
 
-const LOGGER: PiLogger = new PiLogger("ChangeManager");
+const LOGGER: PiLogger = new PiLogger("ChangeManager").mute();
 
 export class ChangeManager {
     public static it = new ChangeManager();

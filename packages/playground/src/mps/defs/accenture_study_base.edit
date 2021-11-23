@@ -1,0 +1,135 @@
+editor Accenture for language Study
+
+accenture_study_core_FormCollection_Unit {
+    @projection [ ${self.content} ]
+}
+accenture_study_core_FormCollection {
+    @projection [
+        Form Collection ${self.name}
+
+        ${self.forms @vertical }
+    ]
+}
+
+accenture_study_core_Form {
+    @projection [
+        Form ${self.name}
+         ${self.fields @vertical }
+    ]
+}
+
+accenture_study_core_Field {
+    @projection [
+        ${self.name} : ${self.optionalName} : ${self.validationCondition} : ${self.widget} : ${self.branch}
+    ]
+}
+accenture_study_core_DirectMemberAccess {
+    @projection [ member: ${self.member} ]
+}
+org_iets3_core_expr_base_GreaterExpression {
+    @symbol ">"
+}
+org_iets3_core_expr_base_GreaterEqualsExpression {
+    @symbol ">="
+}
+org_iets3_core_expr_base_LessEqualsExpression {
+     @symbol "<="
+ }
+org_iets3_core_expr_base_EqualsExpression {
+ @symbol "=="
+}
+org_iets3_core_expr_base_NotEqualsExpression {
+    @symbol "!="
+}
+
+org_iets3_core_expr_base_MulExpression {
+    @symbol "*"
+}
+org_iets3_core_expr_base_PlusExpression {
+    @symbol "+"
+}
+org_iets3_core_expr_base_MinusExpression {
+    @symbol "-"
+}
+org_iets3_core_expr_base_LogicalOrExpression {
+    @symbol "or"
+}
+org_iets3_core_expr_base_LogicalAndExpression {
+    @symbol "and"
+}
+org_iets3_core_expr_base_LessExpression {
+    @symbol "<"
+}
+accenture_study_core_WTTextField {
+    @projection [
+        textfield
+    ]
+}
+accenture_study_core_GotoNext {
+    @projection [ next ]
+}
+
+accenture_study_core_BranchExpression {
+    @projection [
+        branch ${self.targetField}
+    ]
+}
+
+org_iets3_core_expr_base_AlternativesExpression {
+    @projection [
+        alt ${self.alternatives @vertical}
+    ]
+}
+
+accenture_study_core_WTDropdown {
+    @projection [
+        dropdown ${self.codelist}
+    ]
+}
+
+accenture_study_core_Codelist {
+    @projection [
+        ${self.entries @vertical}
+    ]
+}
+
+accenture_study_core_CodelistEntry {
+    @projection [
+        ${self.value} | ${self.label}
+    ]
+}
+
+accenture_study_core_WTNumberField {
+    @projection [
+        numberfield (${self.type})
+    ]
+}
+
+org_iets3_core_expr_simpleTypes_IntegerType {
+    @projection [ Integer ]
+}
+
+org_iets3_core_expr_base_AltOption {
+    @projection [
+        ${self.when} => ${self.then}
+    ]
+    @trigger "alt"
+}
+accenture_study_core_ExitBranch {
+    @projection [ exit ${self.exitBlock} ]
+    @trigger "exit"
+}
+org_iets3_core_expr_simpleTypes_OtherwiseLiteral {
+    @projection [ otherwise ]
+}
+accenture_study_core_ExplicitBranchTarget {
+    @projection [ goto ${self.target}]
+}
+accenture_study_core_TaskVarRef {
+    @projection [ var ${self.variable} ]
+}
+//accenture_study_core_WTTextField {
+//    @projection [
+//        ${self.
+//    ]
+//}

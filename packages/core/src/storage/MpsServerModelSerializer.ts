@@ -17,6 +17,8 @@ export class MpsServerModelSerializer {
         this.language = Language.getInstance();
     }
 
+    public resolveRef: (modelName: string, regularIOd: string) => string;
+
     /**
      * Convert a JSON object formerly JSON-ified by this very class and turn it into
      * a TypeScript object (being an instance of TypeScript class).
@@ -79,6 +81,9 @@ export class MpsServerModelSerializer {
         }
         // TODO
         const references = jsonObject["refs"];
+        // for (const ref of references) {
+            this.convertReferenceProperties(result, references)
+        // }
         // TODO
         return result;
     }
@@ -102,7 +107,7 @@ export class MpsServerModelSerializer {
         }
     }
 
-    private convertPartProperty(parent: PiElement, json: PiElement) {
+    private convertPartProperty(parent: PiElement, json: Object) {
         const linkNameInParent = json["containingLink"];
         const conceptType = this.pi_type(json["concept"]);
         console.log("convertPartProperty of type [" + parent.piLanguageConcept() + "] propName: [" + linkNameInParent + "]");
@@ -126,17 +131,13 @@ export class MpsServerModelSerializer {
         }
     }
 
-    private convertReferenceProperties(result: PiElement, property: Property, value: any) {
-        if (property.isList) {
-            for (const item in value) {
-                if (!isNullOrUndefined(value[item])) {
-                    result[property.name].push(this.language.referenceCreator(value[item], property.type));
-                }
-            }
-        } else {
-            if (!isNullOrUndefined(value)) {
-                result[property.name] = this.language.referenceCreator(value, property.type);
-            }
+    private convertReferenceProperties(parent: PiElement, json: Object) {
+        for (const refLinkName of Object.keys(json)) {
+            const id = json[refLinkName]["id"]["regularId"];
+            const modelName = json[refLinkName]["model"]["qualifiedName"];
+            const referredName = this.resolveRef(modelName, id);
+            console.log("MpsSErverSerialization, resolve [" + modelName + "." + id + "] is [" + referredName + "]");
+            parent[refLinkName] = this.language.referenceCreator(referredName, this.language.conceptProperty(parent.piLanguageConcept(), refLinkName).type);
         }
     }
 

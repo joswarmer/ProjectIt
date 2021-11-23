@@ -220,7 +220,7 @@ export class EditorCommunication {
      * The first unit in the model is shown, if present.
      * @param modelName
      */
-    async openModel(modelName: string) {
+    openModel(modelName: string) {
         LOGGER.log("EditorCommunication.openmodel("+ modelName + ")");
         this.resetGlobalVariables();
 
@@ -274,7 +274,7 @@ export class EditorCommunication {
      * Reads the unit called 'newUnit' from the server and shows it in the editor
      * @param newUnit
      */
-    async openModelUnit(newUnit: PiNamedElement) {
+    openModelUnit(newUnit: PiNamedElement) {
         LOGGER.log("openModelUnit called, unitName: " + newUnit.name);
         if (!!this.currentUnit && newUnit.name == this.currentUnit.name ) {
             // the unit to open is the same as the unit in the editor, so we are doing nothing
@@ -285,7 +285,7 @@ export class EditorCommunication {
         this.saveCurrentUnit();
         // newUnit is stored in the in-memory model as an interface only
         // we must get the full unit from the server and make a swap
-        await this.serverCommunication.loadModelUnit(this.currentModel.name, newUnit.name, (newCompleteUnit: PiNamedElement) => {
+        this.serverCommunication.loadModelUnit(this.currentModel.name, newUnit.name, (newCompleteUnit: PiNamedElement) => {
             this.swapInterfaceAndUnits(newCompleteUnit, newUnit);
         });
     }
