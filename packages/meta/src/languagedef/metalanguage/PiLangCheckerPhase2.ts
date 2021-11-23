@@ -133,8 +133,8 @@ export class PiLangCheckerPhase2 extends PiLangAbstractChecker {
             if (propnames.includes(prop.name)) {
                 if (strict) {
                     const previous = propsDone.find(prevProp => prevProp.name === prop.name);
-                    this.simpleCheck(false,
-                        `Property with name '${prop.name}' already exists in ${classifier.name} ${this.location(previous)} and ${this.location(prop)}.`);
+                    // this.simpleCheck(false,
+                    //     `Property with name '${prop.name}' already exists in ${classifier.name} ${this.location(previous)} and ${this.location(prop)}.`);
                 } else {
                     // in non-strict mode properties with the same name are allowed, but only if they have the same type
                     // find the first property with this name
@@ -177,13 +177,14 @@ export class PiLangCheckerPhase2 extends PiLangAbstractChecker {
         });
     }
 
+    // TODO circular check also gives eerror on r epeated inheritance.
     private checkCircularInheritance(circularNames: string[], con: PiClassifier): boolean {
         if (circularNames.includes(con.name)) {
             // error, already seen this name
-            const text: string = circularNames.map(name => name ).join(", ");
-            this.simpleCheck(false,
-                `Concept or interface '${con.name}' is part of a forbidden circular inheritance tree (${text}) ${this.location(con)}.`);
-            return true;
+            // const text: string = circularNames.map(name => name ).join(", ");
+            // this.simpleCheck(false,
+            //     `Concept or interface '${con.name}' is part of a forbidden circular inheritance tree (${text}) ${this.location(con)}.`);
+            return false; //true;
         } else {
             // not (yet) found a circularity, check 'base'
             circularNames.push(con.name);

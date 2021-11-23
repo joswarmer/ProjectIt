@@ -2,6 +2,8 @@ import { PiElement } from "../language";
 import { Language, Property } from "./Language";
 import { isNullOrUndefined } from "../util";
 
+const UNIT_POSTFIX = "_Unit";
+
 /**
  * Helper class to serialize a model using MobXModelElementImpl.
  * Will take care of model references.
@@ -23,7 +25,23 @@ export class MpsServerModelSerializer {
      * @param jsonObject JSON object as converted from TypeScript by `toSerializableJSON`.
      */
     toTypeScriptInstance(jsonObject: Object): any {
-        return this.toTypeScriptInstanceInternal(jsonObject);
+        if (jsonObject === null) {
+            throw new Error("jsonObject is null, cannot convert to TypeScript");
+        }
+        let type: string = jsonObject["concept"];
+        if (isNullOrUndefined(type)) {
+            throw new Error(`Cannot read json: not a ProjectIt structure, concept missing: ${JSON.stringify(jsonObject)}`);
+        }
+        type = this.pi_type(type) + UNIT_POSTFIX;
+        const result: PiElement = this.language.createConceptOrUnit(type);
+        if (isNullOrUndefined(result)) {
+            throw new Error(`Cannot read json: ${type} unknown.`);
+        }
+        const concept = this.toTypeScriptInstanceInternal(jsonObject);
+        result["name"] = type;
+        result["content"] = concept;
+        return result;
+        // return this.toTypeScriptInstanceInternal(jsonObject);
     }
 
     /**
@@ -39,11 +57,13 @@ export class MpsServerModelSerializer {
         if (isNullOrUndefined(type)) {
             throw new Error(`Cannot read json: not a ProjectIt structure, concept missing: ${JSON.stringify(jsonObject)}`);
         }
-        type = this.startWithUpperCase(type).replace(/\./g,"_");
+        type = this.pi_type(type);
         const result: PiElement = this.language.createConceptOrUnit(type);
         if (isNullOrUndefined(result)) {
             throw new Error(`Cannot read json: ${type} unknown.`);
         }
+        // Get the id , as MPS needs this
+        // TODO result
         const properties = jsonObject["properties"];
         for (const property of this.language.allConceptProperties(type)) {
             const value = properties[property.name];
@@ -54,6 +74,9 @@ export class MpsServerModelSerializer {
             this.convertPrimitiveProperty(result, property, value);
         }
         const parts = jsonObject["children"];
+        for (const child of parts) {
+            this.convertPartProperty(result, child);
+        }
         // TODO
         const references = jsonObject["refs"];
         // TODO
@@ -79,19 +102,27 @@ export class MpsServerModelSerializer {
         }
     }
 
-    private convertPartProperty(result: PiElement, property: Property, value: any) {
-        if (property.isList) {
-            // console.log("    list property of size "+ value.length);
-            // result[property.name] = [];
-            for (const item in value) {
-                if (!isNullOrUndefined(value[item])) {
-                    result[property.name].push(this.toTypeScriptInstance(value[item]));
-                }
+    private convertPartProperty(parent: PiElement, json: PiElement) {
+        const linkNameInParent = json["containingLink"];
+        const conceptType = this.pi_type(json["concept"]);
+        console.log("convertPartProperty of type [" + parent.piLanguageConcept() + "] propName: [" + linkNameInParent + "]");
+        // It is either a concept or a modelunit
+        let property: Property;
+        // if (!!this.language.concept(parent.piLanguageConcept() )) {
+            property = this.language.conceptProperty(parent.piLanguageConcept(), linkNameInParent);
+        // } else {
+        //     property = this.language.unitProperty(parent.piLanguageConcept(), linkNameInParent);
+        // }
+        if (!!property){
+            if (property.isList) {
+                // console.log("    list property of size "+ value.length);
+                // result[property.name] = [];
+                parent[property.name].push(this.toTypeScriptInstanceInternal(json));
+            } else {
+                parent[property.name] = this.toTypeScriptInstanceInternal(json);
             }
         } else {
-            if (!isNullOrUndefined(value)) {
-                result[property.name] = this.toTypeScriptInstance(value);
-            }
+            console.error("Unknown: convertPartProperty of type [" + parent.piLanguageConcept() + "] propName: [" + linkNameInParent + "]");
         }
     }
 
@@ -109,63 +140,15 @@ export class MpsServerModelSerializer {
         }
     }
 
-    private convertProperties(result: PiElement, property: Property, value: any) {
-        // console.log(">> creating property "+ property.name + "  of type " + property.propertyType + " isList " + property.isList);
-        switch (property.propertyType) {
-            case "primitive":
-                if (property.isList) {
-                    result[property.name] = [];
-                    for (const item in value) {
-                        result[property.name].push(value[item]);
-                    }
-                } else {
-                    // TODO Add other primitive property types
-                    if (typeof value === "string") {
-                        result[property.name] = value;
-                    } else if (typeof value === "number") {
-                        result[property.name] = value;
-                    } else if (typeof value === "boolean") {
-                        result[property.name] = value;
-                    }
-                }
-                break;
-            case "part":
-                if (property.isList) {
-                    // console.log("    list property of size "+ value.length);
-                    // result[property.name] = [];
-                    for (const item in value) {
-                        if (!isNullOrUndefined(value[item])) {
-                            result[property.name].push(this.toTypeScriptInstance(value[item]));
-                        }
-                    }
-                } else {
-                    if (!isNullOrUndefined(value)) {
-                        result[property.name] = this.toTypeScriptInstance(value);
-                    }
-                }
-                break;
-            case "reference":
-                if (property.isList) {
-                    for (const item in value) {
-                        if (!isNullOrUndefined(value[item])) {
-                            result[property.name].push(this.language.referenceCreator(value[item], property.type));
-                        }
-                    }
-                } else {
-                    if (!isNullOrUndefined(value)) {
-                        result[property.name] = this.language.referenceCreator(value, property.type);
-                    }
-                }
-                break;
-            default:
-        }
-    }
-
     public startWithUpperCase(word: string): string {
         if (!!word) {
             return word[0].toUpperCase() + word.substr(1);
         }
         return "";
+    }
+
+    public pi_type(conceptName: string): string {
+        return this.startWithUpperCase(conceptName).replace(/\./g,"_");
     }
 
 

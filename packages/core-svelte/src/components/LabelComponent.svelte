@@ -59,7 +59,7 @@
     }
 
     .label {
-        font-weight: bold;
+        /*font-weight: bold;*/
         padding: 3px;
         white-space: normal;
         display: inline-block;

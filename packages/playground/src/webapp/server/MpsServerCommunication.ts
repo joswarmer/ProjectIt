@@ -1,16 +1,25 @@
 import { MpsServerModelSerializer, PiLogger } from "@projectit/core";
 import { PiNamedElement } from "@projectit/core";
 import { GenericModelSerializer } from "@projectit/core";
-import axios from "axios";
-import { SERVER_URL } from "../WebappConfiguration";
 // TODO remove interface IModelUnitData
 import { IModelUnitData, IServerCommunication } from "./IServerCommunication";
-import { setUserMessage } from "../webapp-ts-utils/UserMessageUtils";
+import { MpsServer } from "./MpsServer";
 
 const LOGGER = new PiLogger("MpsServerCommunication"); //.mute();
-const ModelUnitInterfacePostfix: string = "Public";
+
+export const URL = `http://localhost:2905`;
+export const URL_MODEL = URL + `/modules/accenture.study.gen.model`;
+export const URL_MODULES = URL + `/modules`;
+export const URL_MODELS = URL + `/modules/org.projectit.mps.structure.to.ast.example`;
 
 export class MpsServerCommunication implements IServerCommunication {
+    public url_model(modelName: string): string {
+        return URL + `/models/${modelName}`;
+    }
+
+    public url_root(modelName: string, rootid: string): string {
+        return URL + `/models/${modelName}/${rootid}`;
+    }
     static serial: GenericModelSerializer = new GenericModelSerializer();
     private static instance: MpsServerCommunication;
 
@@ -28,45 +37,14 @@ export class MpsServerCommunication implements IServerCommunication {
      * @param piUnit
      */
     async putModelUnit(modelInfo: IModelUnitData, piUnit: PiNamedElement) {
-        LOGGER.log(`ServerCommunication.putModelUnit ${modelInfo.modelName}/${modelInfo.unitName}`);
-        if (!!modelInfo.unitName && modelInfo.unitName !== "" && modelInfo.unitName.match(/^[a-z,A-Z][a-z,A-Z,0-9,_]*$/)) {
-            const model = MpsServerCommunication.serial.convertToJSON(piUnit);
-            const publicModel = MpsServerCommunication.serial.convertToJSON(piUnit, true);
-            try {
-                const res1 = await axios.put(`${SERVER_URL}putModelUnit?folder=${modelInfo.modelName}&name=${modelInfo.unitName}`, model);
-                const res2 = await axios.put(`${SERVER_URL}putModelUnit?folder=${modelInfo.modelName}&name=${modelInfo.unitName}${ModelUnitInterfacePostfix}`, publicModel);
-            } catch (e) {
-                LOGGER.error(this, "putModelUnit, " + e.toString());
-                setUserMessage(e.message);
-            }
-        } else {
-            LOGGER.error(this, "Name of Unit '" + modelInfo.unitName + "' may contain only characters and numbers, and must start with a character.");
-        }
+        LOGGER.log(`MpsServerCommunication.putModelUnit ${modelInfo.modelName}/${modelInfo.unitName}`);
     }
 
     async deleteModelUnit(modelInfo: IModelUnitData ) {
-        console.log(`ServerCommunication.deleteModelUnit ${modelInfo.modelName}/${modelInfo.unitName}`);
-        if (!!modelInfo.unitName && modelInfo.unitName !== "") {
-            try {
-                const res1 = await axios.get(`${SERVER_URL}deleteModelUnit?folder=${modelInfo.modelName}&name=${modelInfo.unitName}`);
-                const res2 = await axios.get(`${SERVER_URL}deleteModelUnit?folder=${modelInfo.modelName}&name=${modelInfo.unitName}${ModelUnitInterfacePostfix}`);
-            } catch (e) {
-                LOGGER.error(this, "deleteModelUnit, " + e.toString());
-                setUserMessage(e.message);
-            }
-        }
+        console.log(`MpsServerCommunication.deleteModelUnit ${modelInfo.modelName}/${modelInfo.unitName}`);
     }
 
     async deleteModel(modelName: string ) {
-        console.log(`ServerCommunication.deleteModel ${modelName}`);
-        if (!!modelName && modelName !== "") {
-            try {
-                const res1 = await axios.get(`${SERVER_URL}deleteModel?folder=${modelName}`);
-            } catch (e) {
-                LOGGER.error(this, "deleteModel, " + e.toString());
-                setUserMessage(e.message);
-            }
-        }
     }
 
     /**
@@ -74,14 +52,7 @@ export class MpsServerCommunication implements IServerCommunication {
      * @param modelListCallback
      */
     async loadModelList(modelListCallback: (names: string[]) => void) {
-        LOGGER.log(`ServerCommunication.loadModelList`);
-        try {
-            const models = await axios.get(`${SERVER_URL}getModelList`);
-            modelListCallback(models.data);
-        } catch (e) {
-            LOGGER.error(this, "loadModelList, " + e.message);
-            setUserMessage(e.message);
-        }
+        LOGGER.log(`MpsServerCommunication.loadModelList`);
     }
 
     /**
@@ -89,8 +60,8 @@ export class MpsServerCommunication implements IServerCommunication {
      * @param modelListCallback
      */
     async loadUnitList(modelName: string, modelListCallback: (names: string[]) => void) {
-        LOGGER.log(`MpsServerCommunication.loadUnitList for: ` + `http://localhost:2904/models/${modelName}`);
-        const answer = await fetch(`http://localhost:2904/models/${modelName}`);
+        LOGGER.log(`MpsServerCommunication.loadUnitList for: ` + this.url_model(modelName));
+        const answer = await fetch(this.url_model(modelName));
         const text = await answer.text();
         const msg = JSON.parse(text)
         if (msg["success"] === false) {
@@ -101,33 +72,11 @@ export class MpsServerCommunication implements IServerCommunication {
             const names = mpsroots.map(root => {
                 LOGGER.log("Root " + root["name"] + " concept " + root["concept"]);
                 const rootid = root["id"]["regularId"];
-                return `http://localhost:2904/models/${modelName}/${rootid}`;
+                return this.url_root(modelName, rootid);
             });
             LOGGER.log("names" + names);
             modelListCallback(names);
-            // const dummy = await mpsroots.forEach(async root => {
-            //    LOGGER.log("Root " + root["name"] + " concept " + root["concept"]);
-            //    const rootid = root["id"]["regularId"];
-            //
-            //    const rootCall = await this.loadUnit(`http://localhost:2904/models/${modelName}/${rootid}`);
-            //    LOGGER.log("Root callsed " + JSON.stringify(rootCall));
-            //    const ser: MpsServerModelSerializer = new MpsServerModelSerializer();
-            //    const newRoot = ser.toTypeScriptInstance(rootCall);
-            // });
         }
-
-            // let result: string[] = [];
-        // try {
-        //     const modelUnits = await axios.get(`${SERVER_URL}getUnitList?folder=${modelName}`);
-        //     // filter out the modelUnitInterfaces
-        //     if (!!modelUnits&& Array.isArray(modelUnits.data)) {
-        //         result = modelUnits.data.filter( (name: string) => name.indexOf(ModelUnitInterfacePostfix) === -1)
-        //     }
-        // } catch (e) {
-        //     LOGGER.error(this, "loadUnitList, " + e.message);
-        //     setUserMessage(e.message);
-        // }
-        // modelListCallback(result);
     }
 
     async loadUnit(url: string) {
@@ -155,32 +104,15 @@ export class MpsServerCommunication implements IServerCommunication {
         LOGGER.log("Root callsed " + JSON.stringify(rootCall));
         const ser: MpsServerModelSerializer = new MpsServerModelSerializer();
         const newRoot = ser.toTypeScriptInstance(rootCall);
+        // TODO TEST
+        // const refname = MpsServer.the.getReferenceName("org.projectit.mps.structure.to.ast.example.model1", "611540801835488555")
+        // LOGGER.log("REF REF REF " + refname);
         loadCallback(newRoot);
 
-        // if (!!unitName && unitName !== "") {
-        //     try {
-        //         const res = await axios.get(`${SERVER_URL}getModelUnit?folder=${modelName}&name=${unitName}`);
-        //         const model = MpsServerCommunication.serial.toTypeScriptInstance(res.data);
-        //         loadCallback(model);
-        //     } catch (e) {
-        //         LOGGER.error(this, "loadModelUnit, " + e.toString());
-        //         setUserMessage(e.message);
-        //     }
-        // }
     }
 
     async loadModelUnitInterface(modelName: string, unitName: string, loadCallback: (piUnitInterface: PiNamedElement) => void) {
         console.log(`ServerCommunication.loadModelUnitInterface for ${unitName}`);
         await this.loadModelUnit(modelName,unitName,loadCallback);
-        // if (!!unitName && unitName !== "") {
-        //     try {
-        //         const res = await axios.get(`${SERVER_URL}getModelUnit?folder=${modelName}&name=${unitName}${ModelUnitInterfacePostfix}`);
-        //         const model = MpsServerCommunication.serial.toTypeScriptInstance(res.data);
-        //         loadCallback(model);
-        //     } catch (e) {
-        //         LOGGER.error(this, `loadModelUnitInterface for ${modelName}/${unitName}: ` + e.toString());
-        //         setUserMessage(e.message);
-        //     }
-        // }
     }
 }

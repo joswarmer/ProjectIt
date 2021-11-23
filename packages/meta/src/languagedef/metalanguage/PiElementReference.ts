@@ -64,6 +64,9 @@ export class PiElementReference<T extends PiLangElement> {
                 this.typeName
             ) as T;
         }
+        if( this._PI_referred === undefined || this._PI_referred === null){
+            console.error("Cannot find [" + this._PI_name + "]");
+        }
         return this._PI_referred;
     }
 

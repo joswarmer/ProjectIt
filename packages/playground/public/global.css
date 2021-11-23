@@ -10,7 +10,7 @@
 	--theme-colors-primary: darkblue;         /* Dialog primary button text color */
 	--theme-colors-list_divider: darkblue;    /* Color of lines between columns in the error list */
 	--theme-colors-slider: "red";			  /* Color of lines between views */
-	--theme-colors-accent: #f50057;			  /* Color to get attention to an element */
+	--theme-colors-accent: darkblue;			  /* Color to get attention to an element */
 	--theme-colors-primary_button_text: black; /* Color of primary buttons in dialogs */
 	--theme-colors-secondary_button_text: grey; /* Color of non-primary buttons in dialogs */
 	--theme-colors-text_app_bar: 'white';		/* Color of header and footer text */

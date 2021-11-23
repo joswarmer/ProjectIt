@@ -242,6 +242,7 @@ export class EditorCommunication {
                         this.serverCommunication.loadModelUnit( modelName, unitName, (unit: PiNamedElement) => {
                             this.currentModel.addUnit(unit);
                             this.currentUnit = unit;
+                            unit.name = unitName;
                             currentUnitName.set(this.currentUnit.name);
                             EditorCommunication.getInstance().showUnitAndErrors(this.currentUnit);
                         });
@@ -249,6 +250,7 @@ export class EditorCommunication {
                     } else {
                         this.serverCommunication.loadModelUnitInterface(modelName, unitName, (unit: PiNamedElement) => {
                             this.currentModel.addUnit(unit);
+                            unit.name = unitName;
                             this.setUnitLists();
                         });
                     }

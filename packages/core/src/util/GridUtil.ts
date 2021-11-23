@@ -25,6 +25,7 @@ export class GridUtil {
         list: ELEMENT_TYPE[],
         columnNames: string[],
         headerStyles: PiStyle[],
+        rowStyles: PiStyle[],
         columnBoxes: ((e: ELEMENT_TYPE) => Box)[],
         builder: (box: Box, editor: PiEditor) => ELEMENT_TYPE,
         editor: PiEditor,
@@ -49,7 +50,8 @@ export class GridUtil {
                 cells.push({
                     row: rowIndex + 2,
                     column: columnIndex + 1,
-                    box: new HorizontalListBox(item, "xx-" + columnIndex, [projector(item), new AliasBox(item, "new-" + columnIndex, NBSP)])
+                    box: new HorizontalListBox(item, "xx-" + columnIndex, [projector(item), new AliasBox(item, "new-" + columnIndex, NBSP)]),
+                    style: styleToCSS(rowStyles[columnIndex])
                 });
             });
         });
@@ -58,6 +60,7 @@ export class GridUtil {
             column: 1,
             columnSpan: columnBoxes.length,
             box: new AliasBox(element, "alias-add-row", "<add new row>", {style: `font-weight: normal;`}),
+            style: styleToCSS(rowStyles[0])
             // TODO Change into Svelte Style
             // style: STYLES.header
         });

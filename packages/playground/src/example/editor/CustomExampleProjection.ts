@@ -281,6 +281,7 @@ export class CustomExampleProjection implements PiProjection {
             entity.attributes,
             ["name", "type"],
             [attributeHeader, attributeHeader],
+            [attributeHeader, attributeHeader],
             [
                 (att: Attribute): Box => {
                     return new TextBox(att, "attr-name", () => att.name, (s: string) => (att.name = s), {

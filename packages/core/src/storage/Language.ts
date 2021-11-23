@@ -76,6 +76,10 @@ export class Language {
         return this.concepts.get(typeName).properties.get(propertyName);
     }
 
+    unitProperty(typeName, propertyName): Property {
+        return this.units.get(typeName).properties.get(propertyName);
+    }
+
     interfaceProperty(typeName, propertyName): Property {
         return this.interfaces.get(typeName).properties.get(propertyName);
     }
