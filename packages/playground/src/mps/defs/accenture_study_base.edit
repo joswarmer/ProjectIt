@@ -16,12 +16,14 @@ accenture_study_core_Form {
         Form ${self.name}
          ${self.fields @vertical }
     ]
+    @trigger "form"
 }
 
 accenture_study_core_Field {
     @projection [
         ${self.name} : ${self.optionalName} : ${self.validationCondition} : ${self.widget} : ${self.branch}
     ]
+    @trigger "field"
 }
 accenture_study_core_DirectMemberAccess {
     @projection [ member: ${self.member} ]
@@ -60,76 +62,139 @@ org_iets3_core_expr_base_LogicalAndExpression {
 org_iets3_core_expr_base_LessExpression {
     @symbol "<"
 }
-accenture_study_core_WTTextField {
-    @projection [
-        textfield
-    ]
+org_iets3_core_expr_base_AssignmentExpr {
+    @symbol ":="
 }
-accenture_study_core_GotoNext {
-    @projection [ next ]
+org_iets3_core_expr_base_DivExpression {
+    @symbol "/"
+}
+org_iets3_core_expr_base_ModExpression {
+    @symbol "mod"
+}
+org_iets3_core_expr_base_LogicalIffExpression {
+    @symbol "<=>"
 }
 
 accenture_study_core_BranchExpression {
-    @projection [
-        branch ${self.targetField}
-    ]
+    @projection [ branch ${self.targetField} ]
+    @trigger "branch"
+}
+accenture_study_base_AccLogicalAndExpression {
+    @symbol "logical and"
+}
+accenture_study_base_AccLogicalOrExpression {
+    @symbol "logical or"
+}
+
+accenture_study_core_GotoNext {
+    @projection [ next  ]
+    @trigger "next"
 }
 
 org_iets3_core_expr_base_AlternativesExpression {
-    @projection [
-        alt ${self.alternatives @vertical}
-    ]
-}
-
-accenture_study_core_WTDropdown {
-    @projection [
-        dropdown ${self.codelist}
-    ]
+    @projection [ alt ${self.alternatives @vertical} ]
+    @trigger "alternatives"
 }
 
 accenture_study_core_Codelist {
     @projection [
         ${self.entries @vertical}
     ]
+    @trigger "codelist"
 }
 
 accenture_study_core_CodelistEntry {
     @projection [
         ${self.value} | ${self.label}
     ]
+    @trigger "entry"
+}
+
+accenture_study_core_WTDropdown {
+    @projection [
+        dropdown ${self.codelist}
+    ]
+    @trigger "dropdown"
 }
 
 accenture_study_core_WTNumberField {
     @projection [
         numberfield (${self.type})
     ]
+    @trigger "numberfield"
+}
+accenture_study_core_WTTextField {
+    @projection [ textfield ]
+    @trigger "textfield"
 }
 
+accenture_study_core_WTRadioButton {
+   @projection [
+        radiobutton  ${self.codelist}
+    ]
+    @trigger "radiobutton"
+}
+
+accenture_study_core_WTCheckbox {
+    @projection [ checkbox ]
+    @trigger "checkbox"
+}
+
+accenture_study_core_WTMultiSelect {
+    @projection [
+        multiselect  ${self.codelist}
+    ]
+    @trigger "multiselect"
+}
+
+accenture_study_core_WTSpecialTBD {
+    @projection [ special TBD ]
+    @trigger "special"
+}
+
+org_iets3_core_expr_simpleTypes_NumberLiteral {
+    @projection [ ${self.value} ]
+//    @trigger "1"
+}
 org_iets3_core_expr_simpleTypes_IntegerType {
-    @projection [ Integer ]
+    @projection [ integer ]
+    @trigger "integer"
+}
+
+org_iets3_core_expr_simpleTypes_RealType {
+    @projection [ real ]
+    @trigger "real"
+}
+
+accenture_study_base_StudyDayType {
+    @projection [ studyday ]
+    @trigger "studyday"
 }
 
 org_iets3_core_expr_base_AltOption {
     @projection [
         ${self.when} => ${self.then}
     ]
-    @trigger "alt"
+    @trigger "option"
 }
 accenture_study_core_ExitBranch {
-    @projection [ exit ${self.exitBlock} ]
+    @projection [ exit ]
     @trigger "exit"
+}
+accenture_study_core_ExitBlock {
+    @projection [ on exit ${self.contents} ]
+    @trigger "exitblock"
 }
 org_iets3_core_expr_simpleTypes_OtherwiseLiteral {
     @projection [ otherwise ]
+    @trigger "otherwise"
 }
 accenture_study_core_ExplicitBranchTarget {
     @projection [ goto ${self.target}]
+    @trigger "goto branch"
 }
 accenture_study_core_TaskVarRef {
-    @projection [ var ${self.variable} ]
+    @projection [ ${self.variable} ]
+    @trigger "variable"
 }
-//accenture_study_core_WTTextField {
-//    @projection [
-//        ${self.
-//    ]
-//}
+

@@ -17,9 +17,7 @@ export class MpsServerModelSerializer {
         this.language = Language.getInstance();
     }
 
-    public resolveRef: (modelName: string, regularIOd: string) => string;
-
-    /**
+     /**
      * Convert a JSON object formerly JSON-ified by this very class and turn it into
      * a TypeScript object (being an instance of TypeScript class).
      * Works recursively.
@@ -110,7 +108,7 @@ export class MpsServerModelSerializer {
     private convertPartProperty(parent: PiElement, json: Object) {
         const linkNameInParent = json["containingLink"];
         const conceptType = this.pi_type(json["concept"]);
-        console.log("convertPartProperty of type [" + parent.piLanguageConcept() + "] propName: [" + linkNameInParent + "]");
+        // console.log("convertPartProperty of type [" + parent.piLanguageConcept() + "] propName: [" + linkNameInParent + "]");
         // It is either a concept or a modelunit
         let property: Property;
         // if (!!this.language.concept(parent.piLanguageConcept() )) {
@@ -133,11 +131,10 @@ export class MpsServerModelSerializer {
 
     private convertReferenceProperties(parent: PiElement, json: Object) {
         for (const refLinkName of Object.keys(json)) {
+            console.log("=========== converting reference property: " + refLinkName)
             const id = json[refLinkName]["id"]["regularId"];
             const modelName = json[refLinkName]["model"]["qualifiedName"];
-            const referredName = this.resolveRef(modelName, id);
-            console.log("MpsSErverSerialization, resolve [" + modelName + "." + id + "] is [" + referredName + "]");
-            parent[refLinkName] = this.language.referenceCreator(referredName, this.language.conceptProperty(parent.piLanguageConcept(), refLinkName).type);
+            parent[refLinkName] = this.language.referenceCreator(refLinkName, this.language.conceptProperty(parent.piLanguageConcept(), refLinkName).type);
         }
     }
 

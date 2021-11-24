@@ -102,14 +102,12 @@ export class MpsServerCommunication implements IServerCommunication {
         LOGGER.log(`MpsServerCommunication.loadModelUnit ${unitName}`);
         const rootCall = await this.loadUnit(unitName);
         LOGGER.log("Root callsed " + JSON.stringify(rootCall));
+        await MpsServer.the.core();
         const ser: MpsServerModelSerializer = new MpsServerModelSerializer();
-        ser.resolveRef = async (model: string, nodeid: string): Promise<string> => {
-            return await MpsServer.the.getReferenceName(model, nodeid)
-        }
         const newRoot = ser.toTypeScriptInstance(rootCall);
         // TODO TEST
-        // const refname = MpsServer.the.getReferenceName("org.projectit.mps.structure.to.ast.example.model1", "611540801835488555")
-        // LOGGER.log("REF REF REF " + refname);
+        const refname = await MpsServer.the.getReferenceName("org.projectit.mps.structure.to.ast.example.model1", "611540801835488555")
+        LOGGER.log("REF REF REF " + refname);
         loadCallback(newRoot);
 
     }
@@ -118,4 +116,9 @@ export class MpsServerCommunication implements IServerCommunication {
         console.log(`ServerCommunication.loadModelUnitInterface for ${unitName}`);
         await this.loadModelUnit(modelName,unitName,loadCallback);
     }
+}
+
+async function resolve(model: string, nodeid: string): Promise<string>  {
+    console.log("================ really resolving ref ");
+    return await MpsServer.the.getReferenceName(model, nodeid)
 }
