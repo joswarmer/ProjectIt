@@ -58,10 +58,11 @@ export class MpsServer {
     }
 
     public async getReferenceName(modelFQN: string, regularId: string): Promise<string> {
-        this.core();
+        console.log("getReferenceName for " + regularId);
+        // await this.core();
         // this.getInfo();
         const nodeDetail: NodeInfoDetailed = await this.client.getNode( {model: MpsServer.MODEL_NAME, id: {"regularId": regularId}});
         console.log("NODE DETAIL " + (!!nodeDetail ? nodeDetail.name : "NULL") );
-        return "DONE";
+        return nodeDetail.name;
     }
 }

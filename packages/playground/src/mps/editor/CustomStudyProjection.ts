@@ -104,7 +104,7 @@ export class CustomStudyProjection implements PiProjection {
             [attributeHeader, attributeHeader, attributeHeader, attributeHeader],
             [mycell, mycell, mycell, mycell],
             [
-                (field: Accenture_study_core_Field) => { return PiProjectionUtil.textBox(field, "label"); },
+                (field: Accenture_study_core_Field) => { return PiProjectionUtil.textBox(field, "name"); },
                 (field: Accenture_study_core_Field) => { return PiProjectionUtil.textBox(field, "optionalName"); },
                 (field: Accenture_study_core_Field) => {
                         if (!!field.widget) {
