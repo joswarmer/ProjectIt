@@ -227,6 +227,7 @@ export class DefaultActionsTemplate {
         allClassifiers.forEach(concept => concept.allParts().forEach(part => {
             // language.concepts.forEach(concept => concept.allParts().filter(ref => !ref.isList).forEach(part => {
             const partType = part.type.referred;
+            // FIXME HERE SHOULD BE A CLASSIFIER, THEN INTERFACE SUBCONCEPTS ARE SHOWN IN EDITOR
             if (partType instanceof PiConcept) { // exclude all primitive types
                 LangUtil.subConceptsIncludingSelf(partType).filter(cls => !cls.isAbstract).forEach(subClass => {
                     const conceptEditor: PiEditConcept = editorDef.findConceptEditor(subClass);
