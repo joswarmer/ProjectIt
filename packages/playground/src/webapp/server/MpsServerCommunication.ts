@@ -106,8 +106,8 @@ export class MpsServerCommunication implements IServerCommunication {
         const ser: MpsServerModelSerializer = new MpsServerModelSerializer();
         const newRoot = ser.toTypeScriptInstance(rootCall);
         // TODO TEST
-        const refname = await MpsServer.the.getReferenceName("org.projectit.mps.structure.to.ast.example.model1", "611540801835488555")
-        LOGGER.log("REF REF REF " + refname);
+        // const refname = await MpsServer.the.getReferenceName("org.projectit.mps.structure.to.ast.example.model1", "611540801835488555")
+        // LOGGER.log("REF REF REF " + refname);
         loadCallback(newRoot);
 
     }
