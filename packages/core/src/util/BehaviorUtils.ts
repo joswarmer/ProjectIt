@@ -45,7 +45,7 @@ export enum BehaviorExecutionResult {
  * @returns {boolean}
  */
 export async function executeBehavior(box: Box, text: string, label: string, editor: PiEditor): Promise<BehaviorExecutionResult> {
-    LOGGER.log("Enter executeBehavior text [" + text + "] label [" + label + "]");
+    LOGGER.log("Enter executeBehavior text [" + text + "] label [" + label + "] box role [" + box.role + "]");
     let partialMatch: boolean = false;
 
     for (const behavior of editor.behaviors) {
@@ -83,7 +83,7 @@ export async function executeBehavior(box: Box, text: string, label: string, edi
             }
         }
     }
-    LOGGER.log("executeBehavior: no alias match");
+    LOGGER.log("executeBehavior: no alias match, ;partial is " + partialMatch);
     if (partialMatch) {
         return BehaviorExecutionResult.PARTIAL_MATCH;
     } else {
