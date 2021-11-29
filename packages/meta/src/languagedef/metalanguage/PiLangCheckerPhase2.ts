@@ -133,6 +133,7 @@ export class PiLangCheckerPhase2 extends PiLangAbstractChecker {
             if (propnames.includes(prop.name)) {
                 if (strict) {
                     const previous = propsDone.find(prevProp => prevProp.name === prop.name);
+                    // FIXME Temp turn off this check as redefinition of properties is ok in MPS, and isn't a problem in the generated TypeScript either.
                     // this.simpleCheck(false,
                     //     `Property with name '${prop.name}' already exists in ${classifier.name} ${this.location(previous)} and ${this.location(prop)}.`);
                 } else {
@@ -177,9 +178,9 @@ export class PiLangCheckerPhase2 extends PiLangAbstractChecker {
         });
     }
 
-    // TODO circular check also gives eerror on r epeated inheritance.
     private checkCircularInheritance(circularNames: string[], con: PiClassifier): boolean {
         if (circularNames.includes(con.name)) {
+            // FIXME Temp: turn off circular check, because it also gives error on repeated inheritance.
             // error, already seen this name
             // const text: string = circularNames.map(name => name ).join(", ");
             // this.simpleCheck(false,

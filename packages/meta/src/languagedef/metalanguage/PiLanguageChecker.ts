@@ -238,6 +238,7 @@ export class PiLanguageChecker extends PiLangAbstractChecker {
             if (!piProperty.isPart) {
                 // it is a reference, so check whether the type has a name by which it can be referred
                 const nameProperty = realType.nameProperty();
+                // FIXME Temp turn off check: in MPS references do not need a name property
                 // this.nestedCheck({
                 //     check: !!nameProperty,
                 //     error: `Type '${realType.name}' cannot be used as a reference, because it has no name property ${this.location(piProperty.type)}.`,
@@ -289,6 +290,7 @@ export class PiLanguageChecker extends PiLangAbstractChecker {
                 check: !!element.name,
                 error: `Property should have a name ${this.location(element)}.`,
                 whenOk: () => {
+                    // FIXME The TS reserved words in the MPS project are ignored, TS code still works ok.
                     if(false) {
                         this.simpleCheck(!(reservedWordsInTypescript.includes(element.name.toLowerCase())),
                             `Property may not have a name that is equal to a reserved word in TypeScript ('${element.name}') ${this.location(element)}.`);

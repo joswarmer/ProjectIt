@@ -2,6 +2,8 @@ import { PiElement } from "../language";
 import { Language, Property } from "./Language";
 import { isNullOrUndefined } from "../util";
 
+// This postfix is added by the MPS 2 ProjectIt coinverter to allow modelunits to have a base
+// and implement interfaces
 const UNIT_POSTFIX = "_Unit";
 
 /**
