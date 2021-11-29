@@ -16,6 +16,8 @@ import {
 import { modelErrors } from "../webapp-ts-utils/ModelErrorsStore";
 import { setUserMessage } from "../webapp-ts-utils/UserMessageUtils";
 import { editorEnvironment, serverCommunication } from "../WebappConfiguration";
+import { IServerCommunication } from "../server/IServerCommunication";
+import { MpsServerCommunication } from "../server/MpsServerCommunication";
 
 const LOGGER = new PiLogger("EditorCommunication"); // .mute();
 

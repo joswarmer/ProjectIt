@@ -18,6 +18,7 @@ import { ServerCommunication } from "./server/ServerCommunication";
 // export const editorEnvironment: PiEnvironment = MyExportEnvironment.getInstance();
 
 import { StudyEnvironment } from "../mps/environment/gen/StudyEnvironment";
+import { MpsServerCommunication } from "./server/MpsServerCommunication";
 export const editorEnvironment: PiEnvironment = StudyEnvironment.getInstance();
 
 // import { CalculatorEnvironment } from "../calculator/environment/gen/CalculatorEnvironment";
@@ -48,5 +49,5 @@ export const editorEnvironment: PiEnvironment = StudyEnvironment.getInstance();
  */
 export const SERVER_URL = "http://127.0.0.1:3001/";
 
-export const serverCommunication: IServerCommunication = ServerCommunication.getInstance();
-// export const serverCommunication: IServerCommunication = MpsServerCommunication.getInstance();
+// export const serverCommunication: IServerCommunication = ServerCommunication.getInstance();
+export const serverCommunication: IServerCommunication = MpsServerCommunication.getInstance();
