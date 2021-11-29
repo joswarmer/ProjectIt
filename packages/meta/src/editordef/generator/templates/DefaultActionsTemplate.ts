@@ -249,7 +249,7 @@ export class DefaultActionsTemplate {
                                 referenceShortcut: (!!conceptEditor.referenceShortcut ?
                                                         `{
                                                               propertyname: "${((conceptEditor.referenceShortcut) as PiLangSelfExp).appliedfeature.sourceName}",
-                                                              metatype: "${((conceptEditor.referenceShortcut) as PiLangSelfExp).appliedfeature.referredElement.referred.type.name}"
+                                                              metatype: "${Names.classifier(((conceptEditor.referenceShortcut) as PiLangSelfExp).appliedfeature.referredElement.referred.type.referred)}"
                                                          }` : undefined),
                                 undo: (!!conceptEditor.referenceShortcut ?
                                                     `(box: Box, editor: PiEditor): void => {

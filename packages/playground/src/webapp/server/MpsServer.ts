@@ -3,6 +3,7 @@
 
 import { MPSServerClient } from "../../mpsclient";
 import { NodeInfo, NodeInfoDetailed } from "../../mpsclient/gen/messages";
+import { PiElement } from "@projectit/core";
 
 export class MpsServer {
     static MODEL_NAME = "org.projectit.mps.structure.to.ast.example.model1";
@@ -64,5 +65,10 @@ export class MpsServer {
         const nodeDetail: NodeInfoDetailed = await this.client.getNode( {model: MpsServer.MODEL_NAME, id: {"regularId": regularId}});
         console.log("NODE DETAIL " + (!!nodeDetail ? nodeDetail.name : "NULL") );
         return nodeDetail.name;
+    }
+
+    // TODO Shoulc be connctet
+    public async changedPrimitiveProperty(node: PiElement, propertyName: string, value: string) {
+        await this.client.requestForPropertyChange({id: {a: node.piId()}, model: MpsServer.MODEL_NAME}, propertyName, value );
     }
 }

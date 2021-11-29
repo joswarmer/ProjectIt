@@ -161,6 +161,7 @@ export class ProjectItGenerateAllAction extends ProjectItGenerateAction {
             }
 
             this.editorGenerator.generate(editor);
+            // FIXME Temp turn off (un)parser generator as it gives errors
             // this.parserGenerator.generate(editor);
         } catch (e) {
             // LOGGER.error(this, "Stopping editor and parser generation because of errors: " + e.message + "\n" + e.stack);
