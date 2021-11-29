@@ -33,7 +33,6 @@
     import arrowDropDown from "../assets/icons/svg/arrow_drop_down.svg";
     import type { MenuItem } from "../webapp-ts-utils/MenuUtils";
     import { metaTypeForExtension } from "../webapp-ts-utils/MenuUtils";
-    import { ServerCommunication } from "../server/ServerCommunication";
     import { EditorCommunication } from "../editor/EditorCommunication";
 
     import {
@@ -50,6 +49,7 @@
     } from "../webapp-ts-utils/WebappStore";
     import { setUserMessage } from "../webapp-ts-utils/UserMessageUtils";
     import { URL_MODEL } from "../server/MpsServerCommunication";
+    import { serverCommunication } from "../WebappConfiguration";
 
     // variables for the file import
     let file_selector;
@@ -73,7 +73,7 @@
     // new model menuitem
     const changeModel = () => {
         // get list of models from server
-        ServerCommunication.getInstance().loadModelList((names: string[]) => {
+        serverCommunication.loadModelList((names: string[]) => {
             if (names.length > 0) {
                 $modelNames = names;
             }
@@ -84,7 +84,7 @@
     // new unit menuitem
     const newUnit = () => {
         // get list of units from server, because new unit may not have the same name as an existing one
-        ServerCommunication.getInstance().loadUnitList($currentModelName, (names: string[]) => {
+        serverCommunication.loadUnitList($currentModelName, (names: string[]) => {
             // list may be empty => this is the first unit to be stored
             $unitNames = names;
             $newUnitDialogVisible = true;
@@ -101,7 +101,7 @@
     const deleteModel = () => {
         console.log("FileMenu.deleteModel");
         // get list of models from server
-        ServerCommunication.getInstance().loadModelList((names: string[]) => {
+        serverCommunication.loadModelList((names: string[]) => {
             // if list not empty, show dialog
             if (names.length > 0) {
                 $modelNames = names;

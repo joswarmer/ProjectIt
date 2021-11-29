@@ -15,7 +15,7 @@ import {
 } from "../webapp-ts-utils/WebappStore";
 import { modelErrors } from "../webapp-ts-utils/ModelErrorsStore";
 import { setUserMessage } from "../webapp-ts-utils/UserMessageUtils";
-import { editorEnvironment } from "../WebappConfiguration";
+import { editorEnvironment, serverCommunication } from "../WebappConfiguration";
 import { IServerCommunication } from "../server/IServerCommunication";
 import { MpsServerCommunication } from "../server/MpsServerCommunication";
 
@@ -31,7 +31,7 @@ export class EditorCommunication {
     static getInstance(): EditorCommunication {
         if( EditorCommunication.instance === null){
             EditorCommunication.instance = new EditorCommunication();
-            EditorCommunication.instance.serverCommunication = MpsServerCommunication.getInstance();
+            EditorCommunication.instance.serverCommunication = serverCommunication;
         }
         return EditorCommunication.instance;
     }

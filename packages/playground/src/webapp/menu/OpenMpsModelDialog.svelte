@@ -66,7 +66,6 @@
 
 	const handleSubmit = () => {
 		let comm = EditorCommunication.getInstance();
-		comm.serverCommunication = MpsServerCommunication.getInstance();
 		if (newNameOk()) {
 			comm.newModel(newName);
 			resetVariables();

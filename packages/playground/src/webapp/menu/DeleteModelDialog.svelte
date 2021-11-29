@@ -28,7 +28,7 @@
 <script lang="ts">
 	import {Button, Dialog, Radio} from 'svelte-mui';
 	import { currentModelName, deleteModelDialogVisible, modelNames } from "../webapp-ts-utils/WebappStore";
-	import { ServerCommunication } from "../server/ServerCommunication";
+	import { serverCommunication } from "../WebappConfiguration";
 
 	let props = {
 		right: false,
@@ -46,7 +46,7 @@
 
 	const handleSubmit = () => {
 		console.log("Submit called, model to be deleted: " + modelToBeDeleted);
-		ServerCommunication.getInstance().deleteModel(modelToBeDeleted);
+		serverCommunication.deleteModel(modelToBeDeleted);
 		modelToBeDeleted = "";
 		$deleteModelDialogVisible = false;
 	}

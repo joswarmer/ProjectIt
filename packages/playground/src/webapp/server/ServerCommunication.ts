@@ -21,6 +21,9 @@ export class ServerCommunication implements IServerCommunication {
         return ServerCommunication.instance;
     }
 
+    private constructor() {
+    }
+
     /**
      * Takes 'piUnit' and stores it under 'modelName' on the server at SERVER_URL.
      * 'modelInfo.unitName' must start with a character and contain only characters and/or numbers.
