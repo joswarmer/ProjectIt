@@ -66,6 +66,7 @@ export class MpsServerCommunication implements IServerCommunication {
      */
     async loadUnitList(modelName: string, modelListCallback: (names: string[]) => void) {
         LOGGER.log(`MpsServerCommunication.loadUnitList for: ` + this.url_model(modelName));
+        await MpsServer.the.tryToConnect();
         const answer = await fetch(this.url_model(modelName));
         const text = await answer.text();
         const msg = JSON.parse(text)
@@ -115,7 +116,8 @@ export class MpsServerCommunication implements IServerCommunication {
         // const refname = await MpsServer.the.getReferenceName("org.projectit.mps.structure.to.ast.example.model1", "611540801835488555")
         // LOGGER.log("REF REF REF " + refname);
         loadCallback(newRoot);
-        await MpsServer.the.tryToConnect();
+        // await MpsServer.the.tryToConnect();
+        console.log("SETTING MPS SERVER PROPAGATION")
         ChangeManager.it.primitive = mps;
     }
 
