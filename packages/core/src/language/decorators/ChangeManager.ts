@@ -27,8 +27,10 @@ export class ChangeManager {
 
     public setPrimitive(self: PiElement, propertyName: string | Symbol, value: string | boolean | number): void {
          if( !!this.primitive) {
-             LOGGER.log("ChangeManager.SET PRIMITIVE VALUE for {" + self["$typename"] + "} [" + propertyName + "] := " + value);
+             LOGGER.log("PROPAGATE ChangeManager.SET PRIMITIVE VALUE for {" + self["$typename"] + "} [" + propertyName + "] := " + value);
              this.primitive(self, propertyName, value);
-        }
+        } else {
+             LOGGER.log("ChangeManager.SET PRIMITIVE VALUE for {" + self["$typename"] + "} [" + propertyName + "] := " + value);
+         }
     }
 }

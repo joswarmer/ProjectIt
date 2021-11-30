@@ -1,9 +1,16 @@
 import { PiElement } from "@projectit/core";
-import { MPSServerClient } from "mpssserver-client";
-import type { NodeInfo, NodeInfoDetailed, NodeReference, PropertyChange } from "mpssserver-client/dist/gen/messages";
+import { ErrorsForModelReport, MPSServerClient, NodeAdded, NodeRemoved } from "mpssserver-client";
+import type {
+    ErrorsForNodeReport,
+    NodeInfo,
+    NodeInfoDetailed,
+    NodeReference,
+    PropertyChange,
+    ReferenceChanged
+} from "mpssserver-client/dist/gen/messages";
 
 export class MpsServer {
-    static MODEL_NAME = "org.projectit.mps.structure.to.ast.example.model1";
+    static MODEL_NAME = "accenture.study.gen.model.example";
 
     public static the = new MpsServer();
 
@@ -14,15 +21,23 @@ export class MpsServer {
     connected: boolean = false;
 
     async tryToConnect() {
+        console.log("MpsServer.tryToConnect 1")
         if (!this.connected) {
+            console.log("MpsServer.tryToConnect not connected");
             await this.client.connect().catch((reason: any) => {
                 console.error("unable to connect to server", reason);
                 process.exit(1);
             });
             console.log("CLIENT CONNECTED");
-            await this.client.registerForChanges(MpsServer.MODEL_NAME, {
-                onPropertyChange: (event: PropertyChange) => { console.log("INCOMING PROPERTY CHANGE [" + event.propertyName + "] := " + event.propertyValue)}
+            this.client.registerForChanges(MpsServer.MODEL_NAME, {
+                onPropertyChange: async (event: PropertyChange) => { console.log("INCOMING PROPERTY CHANGE [" + event.propertyName + "] := " + event.propertyValue)},
+                onNodeRemoved: async (event: NodeRemoved ) => { console.log("INCOMING NODE REMOVED CHANGE [" + event.relationName + "]")},
+                onNodeAdded: async (event: NodeAdded) => { console.log("INCOMING NODE ADDED CHANGE [" + event.relationName + "] := " + event.child.name)},
+                onReferenceChanged: async (event: ReferenceChanged) => { console.log("INCOMING REFERENCE CHANGE [" + event.referenceName + "] := " + event.referenceValue)},
+                onErrorsForNodeReport: async (event: ErrorsForNodeReport) => { console.log("INCOMING ERRORS FOR NODE [" + event.issues + "]")},
+                onErrorsForModelReport: async (event: ErrorsForModelReport) => { console.log("INCOMING ERRORS FOR MODEL [" + event.issues + "]" )}
             })
+            console.log("MpsServer.tryToConnect subscribed to changes")
             this.connected = true;
         }
     }
