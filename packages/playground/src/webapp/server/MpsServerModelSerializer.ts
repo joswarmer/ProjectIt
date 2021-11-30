@@ -1,6 +1,4 @@
-import { PiElement } from "../language";
-import { Language, Property } from "./Language";
-import { isNullOrUndefined } from "../util";
+import { PiElement, Language, Property, isNullOrUndefined  } from "@projectit/core";
 
 // This postfix is added by the MPS 2 ProjectIt coinverter to allow modelunits to have a base
 // and implement interfaces
@@ -65,6 +63,7 @@ export class MpsServerModelSerializer {
             throw new Error(`Cannot read json: ${type} unknown.`);
         }
         // Get the id , as MPS needs this
+        result["$id"] = jsonObject["id"]["regularId"];
         // TODO result
         const properties = jsonObject["properties"];
         for (const property of this.language.allConceptProperties(type)) {

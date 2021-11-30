@@ -71,7 +71,7 @@ export function makePrimitiveProperty(property: PiPrimitiveProperty): string {
         return `${Names.primitivePropertyField(property)} : ${getBaseTypeAsString(property)}${arrayType} ${initializer}; \t${comment}
                 
                 set ${Names.primitivePropertySetter(property)}(value: ${getBaseTypeAsString(property)}) {
-                    ChangeManager.it.setPrimitive(this, "${property.name}");
+                    ChangeManager.it.setPrimitive(this, "${property.name}", value);
                     this.${Names.primitivePropertyField(property)} = value;
                 }
                 get ${Names.primitivePropertyGetter(property)}() {

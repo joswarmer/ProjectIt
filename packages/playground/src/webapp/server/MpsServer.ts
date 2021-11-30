@@ -1,9 +1,7 @@
-// import { NodeData, WsCommunication, NodeReference } from "webeditkit";
-
-
-import { MPSServerClient } from "../../mpsclient";
-import { NodeInfo, NodeInfoDetailed } from "../../mpsclient/gen/messages";
 import { PiElement } from "@projectit/core";
+import { MPSServerClient } from "mpssserver-client";
+import type { NodeInfo, NodeInfoDetailed, NodeReference, PropertyChange } from "mpssserver-client/dist/gen/messages";
+import { Accenture_study_core_Form } from "../../mps/language/gen";
 
 export class MpsServer {
     static MODEL_NAME = "org.projectit.mps.structure.to.ast.example.model1";
@@ -15,12 +13,17 @@ export class MpsServer {
 
     client: MPSServerClient = new MPSServerClient('ws://localhost:2905/jsonrpc');
     connected: boolean = false;
-    async core() {
+
+    async tryToConnect() {
         if (!this.connected) {
             await this.client.connect().catch((reason: any) => {
                 console.error("unable to connect to server", reason);
                 process.exit(1);
             });
+            console.log("CLIENT CONNECTED");
+            await this.client.registerForChanges(MpsServer.MODEL_NAME, {
+                onPropertyChange: (event: PropertyChange) => { console.log("INCOMING PROPERTY CHANGE [" + event.propertyName + "] := " + event.propertyValue)}
+            })
             this.connected = true;
         }
     }
@@ -69,6 +72,16 @@ export class MpsServer {
 
     // TODO Shoulc be connctet
     public async changedPrimitiveProperty(node: PiElement, propertyName: string, value: string) {
-        await this.client.requestForPropertyChange({id: {a: node.piId()}, model: MpsServer.MODEL_NAME}, propertyName, value );
+        const nodeid: NodeReference = { model: MpsServer.MODEL_NAME, id: { regularId: node.piId()}};
+        await this.client.requestForPropertyChange(nodeid, propertyName, value );
+    }
+
+    public async AddedChild(parent: PiElement, propertyName: string, conceptName: string) {
+        const parentid: NodeReference = this.mpsid(parent);
+        await this.client.addChild(parentid, propertyName, conceptName, 0);
+    }
+
+    private mpsid(elem: PiElement): NodeReference {
+        return { model: MpsServer.MODEL_NAME, id: { regularId: elem.piId()}}
     }
 }
