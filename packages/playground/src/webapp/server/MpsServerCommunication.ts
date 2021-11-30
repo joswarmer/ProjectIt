@@ -1,9 +1,10 @@
-import { MpsServerModelSerializer, PiLogger } from "@projectit/core";
+import { ChangeManager, PiElement, PiLogger } from "@projectit/core";
 import { PiNamedElement } from "@projectit/core";
 import { GenericModelSerializer } from "@projectit/core";
 // TODO remove interface IModelUnitData
 import { IModelUnitData, IServerCommunication } from "./IServerCommunication";
 import { MpsServer } from "./MpsServer";
+import { MpsServerModelSerializer } from "./MpsServerModelSerializer";
 
 const LOGGER = new PiLogger("MpsServerCommunication"); //.mute();
 
@@ -44,10 +45,11 @@ export class MpsServerCommunication implements IServerCommunication {
     }
 
     async deleteModelUnit(modelInfo: IModelUnitData ) {
-        console.log(`MpsServerCommunication.deleteModelUnit ${modelInfo.modelName}/${modelInfo.unitName}`);
+        LOGGER.log(`MpsServerCommunication.deleteModelUnit ${modelInfo.modelName}/${modelInfo.unitName}`);
     }
 
     async deleteModel(modelName: string ) {
+        LOGGER.log(`MpsServerCommunication.deleteModel`);
     }
 
     /**
@@ -103,16 +105,18 @@ export class MpsServerCommunication implements IServerCommunication {
      */
     async loadModelUnit(modelName: string, unitName: string, loadCallback: (piUnit: PiNamedElement) => void) {
         LOGGER.log(`MpsServerCommunication.loadModelUnit ${unitName}`);
+        ChangeManager.it.primitive = null;
         const rootCall = await this.loadUnit(unitName);
         LOGGER.log("Root callsed " + JSON.stringify(rootCall));
-        await MpsServer.the.core();
+        // await MpsServer.the.core();
         const ser: MpsServerModelSerializer = new MpsServerModelSerializer();
         const newRoot = ser.toTypeScriptInstance(rootCall);
         // TODO TEST
         // const refname = await MpsServer.the.getReferenceName("org.projectit.mps.structure.to.ast.example.model1", "611540801835488555")
         // LOGGER.log("REF REF REF " + refname);
         loadCallback(newRoot);
-
+        await MpsServer.the.tryToConnect();
+        ChangeManager.it.primitive = mps;
     }
 
     async loadModelUnitInterface(modelName: string, unitName: string, loadCallback: (piUnitInterface: PiNamedElement) => void) {
@@ -120,6 +124,11 @@ export class MpsServerCommunication implements IServerCommunication {
         await this.loadModelUnit(modelName,unitName,loadCallback);
     }
 }
+
+function mps(self: PiElement, propertyName: string | Symbol, value: string | boolean | number) {
+    LOGGER.log("Sending change to MPS Server "+ self.piLanguageConcept() + "[" + propertyName + "] := " + value);
+    MpsServer.the.changedPrimitiveProperty(self, propertyName as string, value as string );
+};
 
 async function resolve(model: string, nodeid: string): Promise<string>  {
     console.log("================ really resolving ref ");
