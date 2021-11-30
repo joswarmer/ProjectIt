@@ -1,7 +1,6 @@
 import { PiElement } from "@projectit/core";
 import { MPSServerClient } from "mpssserver-client";
 import type { NodeInfo, NodeInfoDetailed, NodeReference, PropertyChange } from "mpssserver-client/dist/gen/messages";
-import { Accenture_study_core_Form } from "../../mps/language/gen";
 
 export class MpsServer {
     static MODEL_NAME = "org.projectit.mps.structure.to.ast.example.model1";
