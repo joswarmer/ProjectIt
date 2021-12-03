@@ -133,7 +133,7 @@ export function observablepart(target: DecoratedModelElement, propertyKey: strin
     };
 
     const setter = function(this: any, val: DecoratedModelElement) {
-        ChangeManager.it.setPart(propertyKey);
+        ChangeManager.it.setPart(this, propertyKey, val);
         let storedObserver = this[privatePropertyKey] as IObservableValue<DecoratedModelElement>;
         const storedValue = storedObserver ? storedObserver.get() : null;
         // Clean container of current part

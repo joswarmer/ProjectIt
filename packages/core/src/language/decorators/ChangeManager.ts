@@ -2,6 +2,7 @@ import { IArrayWillChange, IArrayWillSplice } from "mobx";
 import { MODEL_NAME } from "./MobxModelDecorators";
 import { PiLogger } from "../../util/PiLogging";
 import { PiElement } from "../PiElement";
+import { DecoratedModelElement } from "./DecoratedModelElement";
 
 const LOGGER: PiLogger = new PiLogger("ChangeManager");
 
@@ -11,7 +12,8 @@ export class ChangeManager {
     private constructor() {
     }
 
-    primitive: (self: Object, propertyName: string | Symbol, value: string | boolean | number) => void;
+    primitiveCallback: (self: Object, propertyName: string | Symbol, value: string | boolean | number) => void;
+    partCallback: (self: Object, propertyName: string | Symbol, value: string | boolean | number) => void;
 
     public update(change: IArrayWillChange): void {
         // LOGGER.log("ChangeManager.Update " + (change.object as any)[MODEL_NAME]  + "[" + change.index+ "]");
@@ -21,14 +23,14 @@ export class ChangeManager {
         // LOGGER.log("ChangeManager.Splice " + (change.object as any)[MODEL_NAME] + "[" + change.index + "]");
     }
 
-    public setPart(propertyName: string | Symbol): void {
+    public setPart(self: PiElement, propertyName: string | Symbol, DecoratedModelElement): void {
         // LOGGER.log("ChangeManager.SET PART in " + propertyName);
     }
 
     public setPrimitive(self: PiElement, propertyName: string | Symbol, value: string | boolean | number): void {
-         if( !!this.primitive) {
+         if( !!this.primitiveCallback) {
              LOGGER.log("PROPAGATE ChangeManager.SET PRIMITIVE VALUE for {" + self["$typename"] + "} [" + propertyName + "] := " + value);
-             this.primitive(self, propertyName, value);
+             this.primitiveCallback(self, propertyName, value);
         } else {
              LOGGER.log("ChangeManager.SET PRIMITIVE VALUE for {" + self["$typename"] + "} [" + propertyName + "] := " + value);
          }

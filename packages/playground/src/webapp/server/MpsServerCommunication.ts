@@ -1,4 +1,4 @@
-import { ChangeManager, PiElement, PiLogger } from "@projectit/core";
+import { ChangeManager, DecoratedModelElement, PiElement, PiLogger } from "@projectit/core";
 import { PiNamedElement } from "@projectit/core";
 import { GenericModelSerializer } from "@projectit/core";
 // TODO remove interface IModelUnitData
@@ -11,7 +11,7 @@ const LOGGER = new PiLogger("MpsServerCommunication"); //.mute();
 export const URL = `http://localhost:2905`;
 export const URL_MODEL = URL + `/modules/accenture.study.gen.model`;
 export const URL_MODULES = URL + `/modules`;
-export const URL_MODELS = URL + `/modules/org.projectit.mps.structure.to.ast.example`;
+export const URL_MODELS = URL + `/modules/accenture.study.gen.model`;
 
 export class MpsServerCommunication implements IServerCommunication {
     public url_model(modelName: string): string {
@@ -106,7 +106,7 @@ export class MpsServerCommunication implements IServerCommunication {
      */
     async loadModelUnit(modelName: string, unitName: string, loadCallback: (piUnit: PiNamedElement) => void) {
         LOGGER.log(`MpsServerCommunication.loadModelUnit ${unitName}`);
-        ChangeManager.it.primitive = null;
+        ChangeManager.it.primitiveCallback = null;
         const rootCall = await this.loadUnit(unitName);
         LOGGER.log("Root callsed " + JSON.stringify(rootCall));
         // await MpsServer.the.core();
@@ -118,7 +118,7 @@ export class MpsServerCommunication implements IServerCommunication {
         loadCallback(newRoot);
         // await MpsServer.the.tryToConnect();
         console.log("SETTING MPS SERVER PROPAGATION")
-        ChangeManager.it.primitive = mps;
+        ChangeManager.it.primitiveCallback = propertyCallback;
     }
 
     async loadModelUnitInterface(modelName: string, unitName: string, loadCallback: (piUnitInterface: PiNamedElement) => void) {
@@ -127,7 +127,11 @@ export class MpsServerCommunication implements IServerCommunication {
     }
 }
 
-function mps(self: PiElement, propertyName: string | Symbol, value: string | boolean | number) {
+function propertyCallback(self: PiElement, propertyName: string | Symbol, value: string | boolean | number) {
+    LOGGER.log("Sending change to MPS Server "+ self.piLanguageConcept() + "[" + propertyName + "] := " + value);
+    MpsServer.the.changedPrimitiveProperty(self, propertyName as string, value as string );
+};
+function partCallback(self: PiElement, propertyName: string | Symbol, value: DecoratedModelElement) {
     LOGGER.log("Sending change to MPS Server "+ self.piLanguageConcept() + "[" + propertyName + "] := " + value);
     MpsServer.the.changedPrimitiveProperty(self, propertyName as string, value as string );
 };

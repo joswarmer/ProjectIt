@@ -1,4 +1,4 @@
-import { PiElement } from "@projectit/core";
+import { Language, PiElement } from "@projectit/core";
 import { ErrorsForModelReport, MPSServerClient, NodeAdded, NodeRemoved } from "mpssserver-client";
 import type {
     ErrorsForNodeReport,
@@ -6,7 +6,7 @@ import type {
     NodeInfoDetailed,
     NodeReference,
     PropertyChange,
-    ReferenceChanged
+    ReferenceChanged, RegularNodeIDInfo
 } from "mpssserver-client/dist/gen/messages";
 
 export class MpsServer {
@@ -30,12 +30,12 @@ export class MpsServer {
             });
             console.log("CLIENT CONNECTED");
             this.client.registerForChanges(MpsServer.MODEL_NAME, {
-                onPropertyChange: async (event: PropertyChange) => { console.log("INCOMING PROPERTY CHANGE [" + event.propertyName + "] := " + event.propertyValue)},
-                onNodeRemoved: async (event: NodeRemoved ) => { console.log("INCOMING NODE REMOVED CHANGE [" + event.relationName + "]")},
-                onNodeAdded: async (event: NodeAdded) => { console.log("INCOMING NODE ADDED CHANGE [" + event.relationName + "] := " + event.child.name)},
-                onReferenceChanged: async (event: ReferenceChanged) => { console.log("INCOMING REFERENCE CHANGE [" + event.referenceName + "] := " + event.referenceValue)},
-                onErrorsForNodeReport: async (event: ErrorsForNodeReport) => { console.log("INCOMING ERRORS FOR NODE [" + event.issues + "]")},
-                onErrorsForModelReport: async (event: ErrorsForModelReport) => { console.log("INCOMING ERRORS FOR MODEL [" + event.issues + "]" )}
+                onPropertyChange:  (event: PropertyChange) => { console.log("INCOMING PROPERTY CHANGE [" + event.propertyName + "] := " + event.propertyValue)},
+                onNodeRemoved:  (event: NodeRemoved ) => { console.log("INCOMING NODE REMOVED CHANGE [" + event.relationName + "]")},
+                onNodeAdded:  (event: NodeAdded) => { console.log("INCOMING NODE ADDED CHANGE [" + event.relationName + "] := " + event.child.name)},
+                onReferenceChanged:  (event: ReferenceChanged) => { console.log("INCOMING REFERENCE CHANGE [" + event.referenceName + "] := " + event.referenceValue)},
+                onErrorsForNodeReport:  (event: ErrorsForNodeReport) => { console.log("INCOMING ERRORS FOR NODE [" + event.issues + "]")},
+                onErrorsForModelReport:  (event: ErrorsForModelReport) => { console.log("INCOMING ERRORS FOR MODEL [" + event.issues + "]" )}
             })
             console.log("MpsServer.tryToConnect subscribed to changes")
             this.connected = true;
@@ -90,12 +90,20 @@ export class MpsServer {
         await this.client.requestForPropertyChange(nodeid, propertyName, value );
     }
 
-    public async AddedChild(parent: PiElement, propertyName: string, conceptName: string) {
+    public async changedPartProperty(parent: PiElement, propertyName: string, value: string) {
+        const parentid: NodeReference = this.mpsid(parent);
+        await this.client.setChild(parentid, propertyName, Language.getInstance().concept(parent.piLanguageConcept()).typeName, null );
+    }
+
+    public async addChild(parent: PiElement, propertyName: string, conceptName: string) {
         const parentid: NodeReference = this.mpsid(parent);
         await this.client.addChild(parentid, propertyName, conceptName, 0);
     }
 
     private mpsid(elem: PiElement): NodeReference {
         return { model: MpsServer.MODEL_NAME, id: { regularId: elem.piId()}}
+    }
+    private regularNodeId(elem: PiElement): RegularNodeIDInfo {
+        return { regularId: Number.parseInt(elem.piId())}
     }
 }
