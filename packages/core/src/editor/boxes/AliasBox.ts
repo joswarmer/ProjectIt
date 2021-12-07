@@ -12,6 +12,7 @@ export class AliasBox extends AbstractChoiceBox {
      * Filled with the name of the property, in case the AliasBox is used to create new elements
      */
     propertyName?: string;
+    conceptName?: string;
 
     /**
      * This constructor should be private, but must be public to enable the factory method to call it.

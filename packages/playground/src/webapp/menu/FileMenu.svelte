@@ -49,6 +49,7 @@
     } from "../webapp-ts-utils/WebappStore";
     import { setUserMessage } from "../webapp-ts-utils/UserMessageUtils";
     import { serverCommunication } from "../WebappConfiguration";
+    import { URL_MODEL } from "../server/MpsServerCommunication";
 
     // variables for the file import
     let file_selector;

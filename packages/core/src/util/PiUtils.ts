@@ -80,10 +80,12 @@ export class PiUtils {
             if (act.trigger.meta === piKey.meta && act.trigger.keyCode === piKey.keyCode) {
                 if (act.activeInBoxRoles.includes(box.role)) {
                     LOGGER.log("handleKeyboardShortcut: executing keyboard action");
-                    const selected = await act.action(box, piKey, editor);
+                   await runInAction( async () => {
+                        const selected = await act.action(box, piKey, editor);
                     if (selected) {
                         editor.selectElement(selected, act.boxRoleToSelect);
                     }
+                    });
                     return true;
                 } else {
                     LOGGER.log("handleKeyboardShortcut: Keyboard action does not include role " + box.role);

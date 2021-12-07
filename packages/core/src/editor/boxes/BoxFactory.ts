@@ -143,9 +143,11 @@ export class BoxFactory {
         const result: TextBox = this.find<TextBox>(element, role, creator, textCache);
 
         // 2. Apply the other arguments in case they have changed
-        result.getText = getText;
-        result.setText = setText;
-        PiUtils.initializeObject(result, initializer);
+        runInAction( () => {
+            result.getText = getText;
+            result.setText = setText;
+            PiUtils.initializeObject(result, initializer);
+        });
 
         return result;
     }

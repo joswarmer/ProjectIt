@@ -56,8 +56,7 @@
         align-items: center;
         align-content: center;
         justify-items: stretch;
-        border: darkgreen;
-        border-width: 1pt;
+         border-width: 1pt;
         border-style: solid;
     }
 </style>

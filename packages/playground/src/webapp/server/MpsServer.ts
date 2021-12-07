@@ -10,14 +10,14 @@ import type {
 } from "mpssserver-client/dist/gen/messages";
 
 export class MpsServer {
-    static MODEL_NAME = "accenture.study.gen.model.example";
+    static MODEL_NAME = "accenture.stud.gendemo.helloGenerator";
 
     public static the = new MpsServer();
 
     private constructor() {
     }
 
-    client: MPSServerClient = new MPSServerClient('ws://localhost:2905/jsonrpc');
+    client: MPSServerClient = new MPSServerClient('ws://localhost:2904/jsonrpc');
     connected: boolean = false;
 
     async tryToConnect() {
@@ -87,17 +87,17 @@ export class MpsServer {
     // TODO Shoulc be connctet
     public async changedPrimitiveProperty(node: PiElement, propertyName: string, value: string) {
         const nodeid: NodeReference = { model: MpsServer.MODEL_NAME, id: { regularId: node.piId()}};
-        await this.client.requestForPropertyChange(nodeid, propertyName, value );
+        // await this.client.requestForPropertyChange(nodeid, propertyName, value );
     }
 
     public async changedPartProperty(parent: PiElement, propertyName: string, value: string) {
         const parentid: NodeReference = this.mpsid(parent);
-        await this.client.setChild(parentid, propertyName, Language.getInstance().concept(parent.piLanguageConcept()).typeName, null );
+        // await this.client.setChild(parentid, propertyName, Language.getInstance().concept(parent.piLanguageConcept()).typeName, null );
     }
 
     public async addChild(parent: PiElement, propertyName: string, conceptName: string) {
         const parentid: NodeReference = this.mpsid(parent);
-        await this.client.addChild(parentid, propertyName, conceptName, 0);
+        // await this.client.addChild(parentid, propertyName, conceptName, 0);
     }
 
     private mpsid(elem: PiElement): NodeReference {

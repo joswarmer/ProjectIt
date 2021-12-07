@@ -8,6 +8,7 @@ export interface PiStyle {
 
     "font-weight"?: string;
     "font-size"?: string;
+    "font-family"?: string;
 
     border?: string;
     "border-style"?: string;
@@ -50,7 +51,10 @@ export interface PiStyle {
     display?: string;
     "align-items"?:  string;
     "align-content"?:  string;
-    "justify-items"?: string
+    "justify-items"?: string;
+
+    "horizontal-align": string;
+    "vertical-align": string;
 }
 
 export function styleToCSS(style: PiStyle): string {

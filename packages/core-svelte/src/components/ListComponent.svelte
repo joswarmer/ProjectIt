@@ -110,6 +110,7 @@
         grid-template-rows: var(--pi-list-grid-template-rows);
         grid-template-columns: var(--pi-list-grid-template-columns);
         white-space: nowrap;
+        vertical-align: top;
         display: inline-block;
         background-color: var(--pi-list-background-color);
     }

@@ -49,5 +49,5 @@ export const editorEnvironment: PiEnvironment = StudyEnvironment.getInstance();
  */
 export const SERVER_URL = "http://127.0.0.1:3001/";
 
-// export const serverCommunication: IServerCommunication = ServerCommunication.getInstance();
 export const serverCommunication: IServerCommunication = MpsServerCommunication.getInstance();
+// export const serverCommunication: IServerCommunication = MpsServerCommunication.getInstance();

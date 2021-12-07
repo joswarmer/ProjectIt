@@ -82,7 +82,7 @@
         background: transparent;
         border: none;
         display: inline-block;
-        vertical-align: middle;
+        vertical-align: top;
     }
 
     .selectedComponent {
@@ -90,7 +90,7 @@
         border: 1px solid var(--theme-colors-border_selected);
         box-sizing: border-box;
         display: inline-block;
-        vertical-align: middle;
+        vertical-align: top;
         border-radius: 3px;
     }
 </style>

@@ -27,7 +27,7 @@
     const onKeyDown = async (event: KeyboardEvent) => {
         LOGGER.log("onKeyDown: " + event.key);
         // event.persist();
-        if (event.ctrlKey) {
+        if (event.ctrlKey || event.altKey) {
             switch (event.key) {
                 case KEY_ARROW_UP:
                     editor.selectParentBox();

@@ -2,18 +2,20 @@ import { ChangeManager, DecoratedModelElement, PiElement, PiLogger } from "@proj
 import { PiNamedElement } from "@projectit/core";
 import { GenericModelSerializer } from "@projectit/core";
 // TODO remove interface IModelUnitData
-import { IModelUnitData, IServerCommunication } from "./IServerCommunication";
+import { IServerCommunication } from "./IServerCommunication";
 import { MpsServer } from "./MpsServer";
 import { MpsServerModelSerializer } from "./MpsServerModelSerializer";
 
 const LOGGER = new PiLogger("MpsServerCommunication"); //.mute();
 
-export const URL = `http://localhost:2905`;
-export const URL_MODEL = URL + `/modules/accenture.study.gen.model`;
+export const URL = `http://localhost:2904`;
+export const URL_MODEL = URL + `/modules/accenture.stud.gendemo`;
 export const URL_MODULES = URL + `/modules`;
-export const URL_MODELS = URL + `/modules/accenture.study.gen.model`;
+export const URL_MODELS = URL + `/modules/accenture.stud.gendemo`;
 
 export class MpsServerCommunication implements IServerCommunication {
+
+
     public url_model(modelName: string): string {
         return URL + `/models/${modelName}`;
     }
@@ -40,12 +42,12 @@ export class MpsServerCommunication implements IServerCommunication {
      * @param modelInfo
      * @param piUnit
      */
-    async putModelUnit(modelInfo: IModelUnitData, piUnit: PiNamedElement) {
-        LOGGER.log(`MpsServerCommunication.putModelUnit ${modelInfo.modelName}/${modelInfo.unitName}`);
+    async putModelUnit(modelName: string, unitName: string, piUnit: PiNamedElement) {
+        LOGGER.log(`MpsServerCommunication.putModelUnit ${modelName}/${unitName}`);
     }
 
-    async deleteModelUnit(modelInfo: IModelUnitData ) {
-        LOGGER.log(`MpsServerCommunication.deleteModelUnit ${modelInfo.modelName}/${modelInfo.unitName}`);
+    async deleteModelUnit(modelName: string, unitName: string ) {
+        LOGGER.log(`MpsServerCommunication.deleteModelUnit ${modelName}/${unitName}`);
     }
 
     async deleteModel(modelName: string ) {
@@ -133,7 +135,7 @@ function propertyCallback(self: PiElement, propertyName: string | Symbol, value:
 };
 function partCallback(self: PiElement, propertyName: string | Symbol, value: DecoratedModelElement) {
     LOGGER.log("Sending change to MPS Server "+ self.piLanguageConcept() + "[" + propertyName + "] := " + value);
-    MpsServer.the.changedPrimitiveProperty(self, propertyName as string, value as string );
+    MpsServer.the.changedPrimitiveProperty(self, propertyName as string, value as any as string );
 };
 
 async function resolve(model: string, nodeid: string): Promise<string>  {

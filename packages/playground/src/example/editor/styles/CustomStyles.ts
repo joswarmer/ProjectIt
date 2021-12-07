@@ -4,10 +4,9 @@ export const editorStyle: PiEditorStyle = {
         light: {
             label: {
                 color: "black",
-                "font-weight": "bold"
-            },
+             },
             text: {
-                color: "darkblue",
+                color: "black",
                 "font-weight": "normal"
             },
             // alias: {
