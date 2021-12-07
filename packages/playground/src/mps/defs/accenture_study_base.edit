@@ -96,14 +96,14 @@ org_iets3_core_expr_base_AlternativesExpression {
     @trigger "alternatives"
 }
 
-accenture_study_core_Codelist {
+accenture_study_base_Codelist {
     @projection [
         ${self.entries @vertical}
     ]
     @trigger "codelist"
 }
 
-accenture_study_core_CodelistEntry {
+accenture_study_base_CodelistEntry {
     @projection [
         ${self.value} | ${self.label}
     ]
@@ -192,6 +192,10 @@ org_iets3_core_expr_simpleTypes_OtherwiseLiteral {
 accenture_study_core_ExplicitBranchTarget {
     @projection [ goto ${self.target}]
     @trigger "goto branch"
+}
+accenture_study_core_UnconditionalGoto {
+    @projection [ ${self.target}]
+    @trigger "goto unconditional"
 }
 accenture_study_core_TaskVarRef {
     @projection [ ${self.variable} ]

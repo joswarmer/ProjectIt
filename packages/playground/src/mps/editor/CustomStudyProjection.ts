@@ -6,16 +6,17 @@ import {
     createDefaultExpressionBox,
     TextBox,
     KeyPressAction,
-    GridCell, styleToCSS, GridBox, PiProjectionUtil, BoxFactory, GridUtil, PiEditor
+    GridCell, styleToCSS, GridBox, PiProjectionUtil, BoxFactory, GridUtil, PiEditor, AliasBox
 } from "@projectit/core";
 import {
+    Accenture_study_base_Codelist, Accenture_study_base_CodelistEntry, Accenture_study_core_BranchExpression,
     Accenture_study_core_Field,
-    Accenture_study_core_Form,
+    Accenture_study_core_Form, Org_iets3_core_expr_base_AlternativesExpression, Org_iets3_core_expr_base_AltOption,
     Org_iets3_core_expr_simpleTypes_NumberLiteral
 } from "../../mps/language/gen";
-import { attributeHeader, entityBoxStyle, entityNameStyle } from "./styles/CustomStyles";
+import { altcell, attributeHeader } from "./styles/CustomStyles";
 import { StudyEnvironment } from "../environment/gen/StudyEnvironment";
-import { mycell, mygrid } from "./styles/styles";
+import { mycell } from "./styles/CustomStyles";
 
 /**
  * Class CustomStudyProjection provides an entry point for the language engineer to
@@ -45,15 +46,97 @@ export class CustomStudyProjection implements PiProjection {
         if (element instanceof Accenture_study_core_Form) {
             return this.createFormTable(element);
         }
+        if (element instanceof Accenture_study_base_Codelist) {
+            return this.getCodelistBox(element);
+        }
+        if (element instanceof Org_iets3_core_expr_base_AlternativesExpression) {
+            return this.getAlternativesBox(element);
+        }
+        if (element instanceof Accenture_study_core_BranchExpression){
+            return this.getBranchBox(element);
+        }
         return null;
     }
 
+    private getCodelistBox(codelist: Accenture_study_base_Codelist) : Box {
+        return GridUtil.createCollectionRowGrid(
+            codelist,
+            "codelist-grid",
+            "entries",
+            codelist.entries,
+            [],
+            [mycell, mycell],
+            [mycell, mycell],
+            [
+                (entry: Accenture_study_base_CodelistEntry) => {
+                    if (!!entry.value) {
+                        return this.rootProjection.getBox(entry.value);
+                    } else {
+                      return new AliasBox(entry, "Accenture_study_base_CodelistEntry-value",
+                          "[entry]", {
+                            propertyName: "value"
+                        });
+                    }
+                },
+                (entry: Accenture_study_base_CodelistEntry) => { return PiProjectionUtil.textBox(entry, "label"); }
+            ],
+            "Accenture_study_base_CodelistEntry",
+            "<add entry>",
+            StudyEnvironment.getInstance().editor,
+        )
+    }
 
+    private getBranchBox(branch: Accenture_study_core_BranchExpression): Box {
+        return BoxFactory.horizontalList(branch, "branch-all", [
+            BoxFactory.label(branch, "branch-label", "branch"),
+            this.rootProjection.getBox(branch.targetField)
+        ]);
+    }
+    private getAlternativesBox(alt: Org_iets3_core_expr_base_AlternativesExpression) : Box {
+        const options = GridUtil.createCollectionRowGrid(
+            alt,
+            "alternatives-grid",
+            "alternatives",
+            alt.alternatives,
+            [],
+            [altcell, altcell],
+            [altcell, altcell],
+            [
+                (option: Org_iets3_core_expr_base_AltOption) => {
+                    if (!!option.when) {
+                        return this.rootProjection.getBox(option.when);
+                    } else {
+                        return new AliasBox(option, "Org_iets3_core_expr_base_AltOption-when",
+                            "<when>", {
+                                propertyName: "when"
+                            });
+                    }
+                },
+                (option: Org_iets3_core_expr_base_AltOption) => { return BoxFactory.label(option, "arrow", "=>"); },
+                (option: Org_iets3_core_expr_base_AltOption) => {
+                    if (!!option.then) {
+                        return this.rootProjection.getBox(option.then);
+                    } else {
+                        return new AliasBox(option, "Org_iets3_core_expr_base_AltOption-then",
+                            "<then>", {
+                                propertyName: "then"
+                            });
+                    }
+                },
+            ],
+            "Org_iets3_core_expr_base_AltOption",
+            "<add alternative>",
+            StudyEnvironment.getInstance().editor,
+        );
+        return BoxFactory.horizontalList(alt, "alt-all", [
+            BoxFactory.label(alt, "alt-label", "alt"),
+            options
+        ]);
+    }
     public getDemoNumberLiteralExpressionBox(exp: Org_iets3_core_expr_simpleTypes_NumberLiteral): Box {
         return createDefaultExpressionBox(exp, "number-literal", [
             new TextBox(exp, "NumberLiteralExpression-value", () => exp.value.toString(), (v: string) => (exp.value = v /*Number.parseInt(v)*/), {
                 deleteWhenEmpty: true,
-                // style: projectitStyles.stringLiteral,
                 keyPressAction: (currentText: string, key: string, index: number) => {
                     return isNumber(currentText, key, index);
                 }
@@ -61,31 +144,10 @@ export class CustomStudyProjection implements PiProjection {
         ]);
     }
 
-    // private createFromTable(form: Accenture_study_core_Form): Box {
-    //     const proj = this.rootProjection;
-    //     let cells: GridCell[] = [];
-    //     cells.push({ row: 1, column: 1, columnSpan: 1, box: BoxFactory.label(form, "form-label", "Title") });
-    //     cells.push({ row: 1, column: 2, columnSpan: 1, box: BoxFactory.label(form, "form-name", "Name") });
-    //     cells.push({ row: 1, column: 3, columnSpan: 1, box: BoxFactory.label(form, "form-condition", "Condition") });
-    //     cells.push({ row: 1, column: 4, columnSpan: 1, box: BoxFactory.label(form, "form-widget", "Widget") });
-    //     cells.push({ row: 1, column: 5, columnSpan: 1, box: BoxFactory.label(form, "form-branch", "Branch") });
-    //
-    //     form.fields.forEach( (field: Accenture_study_core_Field, index: number) => {
-    //         cells.push({ row: index + 2, column: 1, columnSpan: 1, box: PiProjectionUtil.textBox(field, "label") });
-    //         cells.push({ row: index + 2, column: 2, columnSpan: 1, box: PiProjectionUtil.textBox(field, "optionalName") });
-    //         cells.push({ row: index + 2, column: 3, columnSpan: 1, box: proj.getBox(field.validationCondition)});
-    //         cells.push({ row: index + 2, column: 4, columnSpan: 1, box: proj.getBox(field.widget) });
-    //         cells.push({ row: index + 2, column: 5, columnSpan: 1, box: proj.getBox(field.branch) });
-    //     } );
-    //     return new GridBox(form, "form-all", cells, {
-    //         style: styleToCSS(entityBoxStyle)
-    //     });
-    // }
-
     private createFormTable(form: Accenture_study_core_Form): Box {
         return BoxFactory.verticalList(form, "form-overall", [
             BoxFactory.horizontalList(form, "form-header", [
-                BoxFactory.label(form, "form-header-spacing", " "),
+                // BoxFactory.label(form, "form-header-spacing", " "),
                 BoxFactory.label(form, "form-header-label", "Form"),
                 BoxFactory.text(form, "form-header-name", () => form.name, (value: string) => form.name = value)
             ]),
@@ -125,11 +187,9 @@ export class CustomStudyProjection implements PiProjection {
                     }
                 },
             ],
-            (box: Box, editor: PiEditor) => {
-                return new Accenture_study_core_Field();
-            } ,
+            "Accenture_study_core_Field",
+            "<add field>",
             StudyEnvironment.getInstance().editor,
-            { style:styleToCSS(mygrid)}
         );
     }
 

@@ -356,7 +356,9 @@ export const MANUAL_CUSTOM_BEHAVIORS: PiCustomBehavior[] = [
             "Org_iets3_core_expr_util_DecTab-predefY",
             "Org_iets3_core_expr_util_DecTab-default",
             "Org_iets3_core_expr_util_DecTabContent-expressions",
-            "Org_iets3_core_expr_util_QueryColDef-expr"
+            "Org_iets3_core_expr_util_QueryColDef-expr",
+            "Accenture_study_base_CodelistEntry-value",
+            "alias-Accenture_study_base_CodelistEntry-value-textbox"
         ],
         trigger: /[0-9]/, // for single Concept part
         action: (box: Box, trigger: PiTriggerType, ed: PiEditor): PiElement | null => {
