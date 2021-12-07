@@ -37,11 +37,12 @@
     "clean-octopus": "bash ../../scripts/projectit-dev.sh clean-it -f -d src/octopus/defs -o src/octopus",
     "clean-openhab": "bash ../../scripts/projectit-dev.sh clean-it -f -d src/openhab/defs -o src/openhab",
     "clean-pi-languages": "bash ../../scripts/projectit-dev.sh clean-it -f -d src/pi-languages/defs -o src/pi-languages",
-    "clean-taxrules": "bash ../../scripts/projectit-dev.sh clean-it -f -d src/taxrules/defs -o src/taxrules",
+    "clean-taxrules": 	  "bash ../../scripts/projectit-dev.sh clean-it -f -d src/taxrules/defs -o src/taxrules",
     "clean-all-examples": "yarn clean-calculator && yarn clean-octopus && yarn clean-example && yarn clean-heating && yarn clean-json && yarn clean-expressions && yarn clean-openhab && yarn clean-pi-languages && yarn clean-taxrules && yarn clean-expressions"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
+    "rollup-plugin-inject-process-env": "1.3.1",
     "@rollup/plugin-node-resolve": "^11.0.0",
     "@rollup/plugin-typescript": "8.2.5",
     "@tsconfig/svelte": "^1.0.0",
@@ -60,8 +61,6 @@
     "@projectit/core-svelte": "0.2.0",
     "@projectit/server": "0.2.0",
     "@types/node": "^14.14.31",
-    "mobx": "6.3.3",
-    "mobx-utils": "6.0.4",
     "click-outside": "1.0.4",
     "kotlin": "^1.5.21",
     "lodash": "^4.17.21",
