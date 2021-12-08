@@ -134,8 +134,9 @@ export class MpsServerModelSerializer {
         for (const refLinkName of Object.keys(json)) {
             console.log("=========== converting reference property: " + refLinkName)
             const id = json[refLinkName]["id"]["regularId"];
+            const name = json[refLinkName]["name"];
             const modelName = json[refLinkName]["model"]["qualifiedName"];
-            parent[refLinkName] = this.language.referenceCreator(refLinkName, this.language.conceptProperty(parent.piLanguageConcept(), refLinkName).type);
+            parent[refLinkName] = this.language.referenceCreator(name ?? refLinkName, this.language.conceptProperty(parent.piLanguageConcept(), refLinkName).type);
         }
     }
 
