@@ -80,17 +80,18 @@
 
     .unSelectedComponent {
         background: transparent;
-        border: none;
+        /*border: 1px transparent;*/
+        box-sizing: border-box;
         display: inline-block;
         vertical-align: top;
     }
 
     .selectedComponent {
         background-color: var(--theme-colors-bg_selected);
-        border: 1px solid var(--theme-colors-border_selected);
+        outline: 1px solid var(--theme-colors-border_selected);
         box-sizing: border-box;
         display: inline-block;
         vertical-align: top;
-        border-radius: 3px;
+        /*border-radius: 3px;*/
     }
 </style>

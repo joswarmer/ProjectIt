@@ -109,6 +109,7 @@ export class MpsServerCommunication implements IServerCommunication {
     async loadModelUnit(modelName: string, unitName: string, loadCallback: (piUnit: PiNamedElement) => void) {
         LOGGER.log(`MpsServerCommunication.loadModelUnit ${unitName}`);
         ChangeManager.it.primitiveCallback = null;
+        // ChangeManager.it.partCallback = null;
         const rootCall = await this.loadUnit(unitName);
         LOGGER.log("Root callsed " + JSON.stringify(rootCall));
         // await MpsServer.the.core();
@@ -119,8 +120,9 @@ export class MpsServerCommunication implements IServerCommunication {
         // LOGGER.log("REF REF REF " + refname);
         loadCallback(newRoot);
         // await MpsServer.the.tryToConnect();
-        console.log("SETTING MPS SERVER PROPAGATION")
+        console.log("SETTING MPS SERVER PROPAGATION");
         ChangeManager.it.primitiveCallback = propertyCallback;
+        // ChangeManager.it.partCallback = partCallback;
     }
 
     async loadModelUnitInterface(modelName: string, unitName: string, loadCallback: (piUnitInterface: PiNamedElement) => void) {
@@ -129,13 +131,13 @@ export class MpsServerCommunication implements IServerCommunication {
     }
 }
 
-function propertyCallback(self: PiElement, propertyName: string | Symbol, value: string | boolean | number) {
-    LOGGER.log("Sending change to MPS Server "+ self.piLanguageConcept() + "[" + propertyName + "] := " + value);
-    MpsServer.the.changedPrimitiveProperty(self, propertyName as string, value as string );
+function propertyCallback(self: PiElement, propertyName: string | Symbol, value: string) {
+    LOGGER.log("propertyCallback.Sending change to MPS Server "+ self.piLanguageConcept() + "[" + propertyName + "] := " + value);
+    MpsServer.the.changedPrimitiveProperty(self, propertyName as string, value );
 };
 function partCallback(self: PiElement, propertyName: string | Symbol, value: DecoratedModelElement) {
     LOGGER.log("Sending change to MPS Server "+ self.piLanguageConcept() + "[" + propertyName + "] := " + value);
-    MpsServer.the.changedPrimitiveProperty(self, propertyName as string, value as any as string );
+    // MpsServer.the.changedPrimitiveProperty(self, propertyName as string, value  );
 };
 
 async function resolve(model: string, nodeid: string): Promise<string>  {

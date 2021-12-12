@@ -54,7 +54,10 @@ export class GridUtil {
                 cells.push({
                     row: rowIndex + 2,
                     column: columnIndex + 1,
-                    box: new HorizontalListBox(item, "xx-" + columnIndex, [projector(item), new AliasBox(item, "new-" + columnIndex, NBSP)]),
+                    box: new HorizontalListBox(item, "xx-" + columnIndex, [
+                        projector(item),
+                        // new AliasBox(item, "new-" + columnIndex, NBSP)
+                    ], { style: { margin: "-2px" }}),
                     style: rowStyles[columnIndex]
                 });
             });
@@ -64,7 +67,7 @@ export class GridUtil {
             column: 1,
             columnSpan: columnBoxes.length,
             box: new AliasBox(element, "alias-add-row-" + elementConcept, newRowText,
-                {propertyName: listPropertyName, conceptName: elementConcept } ),
+                {propertyName: listPropertyName, conceptName: elementConcept} ),
             style: rowStyles[0]
          });
 
@@ -105,7 +108,12 @@ export class GridUtil {
                 cells.push({
                     column: rowIndex + 2,
                     row: columnIndex + 1,
-                    box: new HorizontalListBox(item, "xx-" + columnIndex, [projector(item), new AliasBox(item, "new-" + columnIndex, NBSP)])
+                    // box: new HorizontalListBox(item, "xx-" + columnIndex, [
+                    //     projector(item),
+                    //     new AliasBox(item, "new-" + columnIndex, NBSP)
+                    // ]
+                    // )
+                    box: projector(item)
                 });
             });
         });

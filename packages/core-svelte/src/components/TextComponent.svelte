@@ -328,6 +328,7 @@
         }
         // textStyle = ":before {" +  styleToCSS(conceptStyle(editor.style, "light", textBox.element.piLanguageConcept(), "text", textBox.style)) + "}";
         const boxType = (textBox.parent instanceof AliasBox ? "alias" : (textBox.parent instanceof SelectBox ? "select" : "text"));
+        const boxStyle = (textBox.parent instanceof AliasBox ? textBox.parent.style : (textBox.parent instanceof SelectBox ? textBox.parent.style : textBox.style));
         textStyle = styleToCSS(conceptStyle(editor.style, editor.theme, textBox.element.piLanguageConcept(), boxType, textBox.style));
         // if (textBox.getText() === "appel") {
         //     textStyle += "--theme-colors-bg_text_box: lightgrey;"

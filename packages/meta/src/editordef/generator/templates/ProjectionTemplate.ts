@@ -235,9 +235,7 @@ export class ProjectionTemplate {
                            language: PiLanguage) {
         let result: string = "";
         if (item instanceof PiEditProjectionText) {
-            result += ` BoxFactory.label(${elementVarName}, "${elementVarName}-label-line-${index}-item-${itemIndex}", "${item.text}", {
-                            selectable: false
-                        }) `;
+            result += ` BoxFactory.label(${elementVarName}, "${elementVarName}-label-line-${index}-item-${itemIndex}", "${item.text}") `;
         } else if (item instanceof PiEditPropertyProjection) {
             result += this.propertyProjection(item, elementVarName, concept, language);
         } else if (item instanceof PiEditSubProjection) {
@@ -322,7 +320,11 @@ export class ProjectionTemplate {
             BoxFactory.${direction.toLowerCase()}List(${element}, "${Roles.property(propertyConcept)}-list", 
                 ${element}.${propertyConcept.name}.map(feature => {
                     const roleName: string =  "${Roles.property(propertyConcept)}-" + feature.piId() + "-separator";
-                    return BoxFactory.horizontalList(${element}, roleName, [this.rootProjection.getBox(feature), BoxFactory.label(${element}, roleName + "label", "${item.listJoin.joinText}")]) as Box;
+                    ${(item.listJoin.joinText === "" && false ?
+                        `return BoxFactory.horizontalList(${element}, roleName, [this.rootProjection.getBox(feature)]) as Box;`
+                    :
+                        `return BoxFactory.horizontalList(${element}, roleName, [this.rootProjection.getBox(feature), BoxFactory.label(${element}, roleName + "label", "${item.listJoin.joinText}")]) as Box;`
+                    )}
                 }).concat(
                     BoxFactory.alias(${element}, "${Roles.newConceptPart(concept, propertyConcept)}", "<+ ${propertyConcept.name}>" , { //  add ${propertyConcept.name}
                         propertyName: "${propertyConcept.name}"

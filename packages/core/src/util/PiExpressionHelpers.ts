@@ -78,7 +78,7 @@ export function createDefaultBinaryBox(exp: PiBinaryExpression, symbol: string, 
         createOperatorBox(editor, exp, symbol),
         // TODO  Change into Svelte styles: style: STYLES.aliasExpression
         new AliasBox(exp, AFTER_BINARY_OPERATOR, NBSP),
-        (!!exp.piRight() ? projectionToUse.getBox(exp.piRight()) : new AliasBox(exp, PI_BINARY_EXPRESSION_RIGHT, "[add-right]", { propertyName: "right" }))
+        (!!exp.piRight() ? projectionToUse.getBox(exp.piRight()) : new AliasBox(exp, PI_BINARY_EXPRESSION_RIGHT, "<add-right>", { propertyName: "right" }))
     ]);
     return result;
 }

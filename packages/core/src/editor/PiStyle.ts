@@ -53,8 +53,8 @@ export interface PiStyle {
     "align-content"?:  string;
     "justify-items"?: string;
 
-    "horizontal-align": string;
-    "vertical-align": string;
+    "horizontal-align"?: string;
+    "vertical-align"?: string;
 }
 
 export function styleToCSS(style: PiStyle): string {
