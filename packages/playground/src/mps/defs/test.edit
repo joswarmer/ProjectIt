@@ -1,0 +1,20 @@
+editor A  for language TestLanguage
+
+org_projectit_test_RootConcept_Unit {
+    @projection [
+        ${self.content}
+    ]
+}
+
+org_projectit_test_RootConcept {
+    @projection [
+        Root ${self.name}
+
+        concept: ${self.mockConcept}
+
+        Interfaces: ${self.mockInterface}
+
+        References: ${self.mockRef}
+
+    ]
+}

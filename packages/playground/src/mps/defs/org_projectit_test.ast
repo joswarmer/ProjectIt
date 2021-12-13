@@ -1,0 +1,30 @@
+language TestLanguage
+
+/* THIS IS A MOCK CONCEPT FOR A TESt */
+concept org_projectit_test_MockConcept base jetbrains_mps_lang_core_BaseConcept implements org_projectit_test_MockInterface, jetbrains_mps_lang_core_INamedConcept {
+    enumProperty: org_projectit_test_EnumMock; 
+    booleanProperty: boolean; 
+    integerProperty: number; 
+    stringProperty: string; 
+}
+interface org_projectit_test_MockInterface base jetbrains_mps_lang_core_INamedConcept {
+}
+abstract expression org_projectit_test_Expression base jetbrains_mps_lang_core_BaseConcept {
+}
+binary expression org_projectit_test_PlusExpression base org_projectit_test_BinaryExpression {
+    priority = 20;
+}
+expression org_projectit_test_StringLiteralExpression base org_projectit_test_Expression {
+    value: string; 
+}
+concept org_projectit_test_RootConcept implements jetbrains_mps_lang_core_INamedConcept {
+    reference mockRef?: org_projectit_test_MockConcept;
+    mockConcept?: org_projectit_test_MockConcept;
+    mockInterface: org_projectit_test_MockInterface[];
+}
+abstract binary expression org_projectit_test_BinaryExpression base org_projectit_test_Expression {
+    left: org_projectit_test_Expression;
+    right: org_projectit_test_Expression;
+    priority = 20;
+}
+limited org_projectit_test_EnumMock { Mock_1; Mock_42; NoMockAtAll; }

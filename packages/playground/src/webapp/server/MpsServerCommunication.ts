@@ -9,9 +9,10 @@ import { MpsServerModelSerializer } from "./MpsServerModelSerializer";
 const LOGGER = new PiLogger("MpsServerCommunication"); //.mute();
 
 export const URL = `http://localhost:2904`;
-export const URL_MODEL = URL + `/modules/accenture.stud.gendemo`;
+// export const URL_MODEL = URL + `/modules/accenture.stud.gendemo`;
+export const URL_MODEL = URL + `/modules/org.projectit.mps.structure.to.ast.example`;
 export const URL_MODULES = URL + `/modules`;
-export const URL_MODELS = URL + `/modules/accenture.stud.gendemo`;
+export const URL_MODELS = URL + `/modules/org.projectit.mps.structure.to.ast.example`;
 
 export class MpsServerCommunication implements IServerCommunication {
 

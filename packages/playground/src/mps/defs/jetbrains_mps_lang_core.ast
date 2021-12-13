@@ -1,0 +1,10 @@
+language TestLanguage
+
+abstract concept jetbrains_mps_lang_core_BaseConcept {
+    smodelAttribute?: jetbrains_mps_lang_core_Attribute[];
+}
+abstract concept jetbrains_mps_lang_core_Attribute base jetbrains_mps_lang_core_BaseConcept {
+}
+interface jetbrains_mps_lang_core_INamedConcept {
+    public name: identifier; 
+}

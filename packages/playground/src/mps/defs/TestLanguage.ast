@@ -1,0 +1,12 @@
+language TestLanguage
+
+model TestLanguageModel {
+    name: identifier;
+    RootConceptUnits: org_projectit_test_RootConcept_Unit[];
+}
+
+modelunit org_projectit_test_RootConcept_Unit{
+    public name: identifier;
+    content: org_projectit_test_RootConcept;
+}
+
