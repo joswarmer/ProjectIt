@@ -1,10 +1,40 @@
-language TestLanguage
+language Study
 
-abstract concept jetbrains_mps_lang_core_BaseConcept {
-    smodelAttribute?: jetbrains_mps_lang_core_Attribute[];
+concept jetbrains_mps_lang_core_NodeAttribute base jetbrains_mps_lang_core_Attribute {
+}
+interface jetbrains_mps_lang_core_ScopeProvider {
+}
+interface jetbrains_mps_lang_core_IResolveInfo {
+    resolveInfo: string; 
+}
+interface jetbrains_mps_lang_core_IType {
+}
+interface jetbrains_mps_lang_core_ISkipConstraintsChecking {
+}
+concept jetbrains_mps_lang_core_ChildAttribute base jetbrains_mps_lang_core_Attribute {
+    role_DebugInfo: string; 
+    linkId: string; 
 }
 abstract concept jetbrains_mps_lang_core_Attribute base jetbrains_mps_lang_core_BaseConcept {
 }
 interface jetbrains_mps_lang_core_INamedConcept {
     public name: identifier; 
+}
+interface jetbrains_mps_lang_core_IPlaceholderContent {
+}
+concept jetbrains_mps_lang_core_BasePlaceholder base jetbrains_mps_lang_core_ChildAttribute {
+    content?: jetbrains_mps_lang_core_IPlaceholderContent;
+}
+interface jetbrains_mps_lang_core_ISmartReferent {
+}
+abstract concept jetbrains_mps_lang_core_BaseConcept {
+}
+interface jetbrains_mps_lang_core_IWrapper {
+}
+interface jetbrains_mps_lang_core_ISuppressErrors {
+}
+concept jetbrains_mps_lang_core_BaseCommentAttribute base jetbrains_mps_lang_core_ChildAttribute implements jetbrains_mps_lang_core_ISkipConstraintsChecking, jetbrains_mps_lang_core_IDontApplyTypesystemRules, jetbrains_mps_lang_core_ISuppressErrors {
+    commentedNode: jetbrains_mps_lang_core_BaseConcept;
+}
+interface jetbrains_mps_lang_core_IDontApplyTypesystemRules {
 }

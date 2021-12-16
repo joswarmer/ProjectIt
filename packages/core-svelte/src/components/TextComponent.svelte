@@ -323,9 +323,10 @@
         AUTO_LOGGER.log("TextComponent role " + textBox.role + " text [" + text + "] current [" + currentText() + "] textBox [" + textBox.getText() + "] innertText [" + element?.innerText + "]");
         placeholder = textBox.placeHolder;
         // If being edited, do not set the value, let the user type whatever (s)he wants
-        if (!isEditing) {
+        // if (!isEditing) {
+        // TODO Check whether this does not do too much now
             text = textBox.getText();
-        }
+        // }
         // textStyle = ":before {" +  styleToCSS(conceptStyle(editor.style, "light", textBox.element.piLanguageConcept(), "text", textBox.style)) + "}";
         const boxType = (textBox.parent instanceof AliasBox ? "alias" : (textBox.parent instanceof SelectBox ? "select" : "text"));
         const boxStyle = (textBox.parent instanceof AliasBox ? textBox.parent.style : (textBox.parent instanceof SelectBox ? textBox.parent.style : textBox.style));

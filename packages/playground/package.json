@@ -70,7 +70,7 @@
     "svelte-mui": "^0.3.3-7",
     "tslib": "^2.3.0",
     "rpc-websockets": "^7.4.16",
-    "mpssserver-client": "^1.0.5"
+    "mpssserver-client": "^1.0.6"
   },
   "resolutions": {
     "electron": "^11.0.1"

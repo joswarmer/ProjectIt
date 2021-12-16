@@ -22,7 +22,7 @@
         KEY_SPACEBAR, KEY_ESCAPE, KEY_DELETE, KEY_ARROW_LEFT, KEY_BACKSPACE, KEY_ARROW_RIGHT, styleToCSS, conceptStyle
     } from "@projectit/core";
     import type { SelectOption } from "@projectit/core";
-    import { action, autorun } from "mobx";
+    import { action, autorun, runInAction } from "mobx";
     import { clickOutside } from "./clickOutside";
     import { afterUpdate, onMount } from "svelte";
     import { writable } from "svelte/store";
@@ -66,14 +66,17 @@
     };
 
     onMount(() => {
+
         MOUNT_LOGGER.log("onMount for role [" + choiceBox.role + "] with textComponent " + textComponent);
-        choiceBox.textBox.setFocus = setFocus;
-        choiceBox.textBox.style = choiceBox.style;
-        choiceBox.setFocus = setFocus;
-        const selected = choiceBox.getSelectedOption();
-        if (!!selected) {
-            choiceBox.textBox.setText(selected.label);
-        }
+        runInAction( () => {
+            choiceBox.textBox.setFocus = setFocus;
+            choiceBox.textBox.style = choiceBox.style;
+            choiceBox.setFocus = setFocus;
+            const selected = choiceBox.getSelectedOption();
+            if (!!selected) {
+                choiceBox.textBox.setText(selected.label);
+            }
+        });
     });
 
     afterUpdate(() => {

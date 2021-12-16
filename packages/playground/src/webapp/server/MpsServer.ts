@@ -9,24 +9,25 @@ import type {
     ReferenceChanged, RegularNodeIDInfo
 } from "mpssserver-client/dist/gen/messages";
 import { PropertyChangeWorker } from "../../mps/validator/PropertyChangeWorker";
-import { StudyWalker } from "../../mps/utils/gen";
+import { TestLanguageWalker } from "../../mps/utils/gen";
 import { editorEnvironment } from "../WebappConfiguration";
 
 export class MpsServer {
-    static MODEL_NAME = "accenture.stud.gendemo.helloGenerator";
+    static MODEL_NAME = "org.projectit.mps.structure.to.ast.example.model1";
 
     public static the = new MpsServer();
 
     private constructor() {
     }
 
-    client: MPSServerClient = new MPSServerClient('ws://localhost:2904/jsonrpc');
+    client: MPSServerClient = null;
     connected: boolean = false;
 
     async tryToConnect() {
         console.log("MpsServer.tryToConnect 1")
         if (!this.connected) {
             console.log("MpsServer.tryToConnect not connected");
+            this.client = new MPSServerClient('ws://localhost:2904/jsonrpc');
             await this.client.connect().catch((reason: any) => {
                 console.error("unable to connect to server", reason);
                 process.exit(1);
@@ -37,19 +38,21 @@ export class MpsServer {
                 onPropertyChange:  (event: PropertyChange) => {
                     console.log("INCOMING PROPERTY CHANGE [" + event.propertyName + "] := " + event.propertyValue + " by " + event.author);
                     console.log("Node Reference " + JSON.stringify(event.node));
-                    // if (typeof event.propertyValue === "string") {
-                    //     const propChanger = new PropertyChangeWorker(event.node.id.regularId as string, event.propertyName, (event.propertyValue) as any as string);
-                    //     const walker = new StudyWalker();
-                    //     walker.myWorkers.push(propChanger);
-                    //     walker.walk(editorEnvironment.editor.rootElement);
-                    // } else {
-                    //     console.log("NOT A STRING");
-                    // }
+                    if (typeof event.propertyValue === "string") {
+                        console.log("TRYING to Reconcile")
+                        const propChanger = new PropertyChangeWorker(event.node.id.regularId as string, event.propertyName, (event.propertyValue) as any as string);
+                        const walker = new TestLanguageWalker();
+                        walker.myWorkers.push(propChanger);
+                        console.log("WALKING " + editorEnvironment.editor.rootElement.piLanguageConcept());
+                        walker.walk(editorEnvironment.editor.rootElement as any, (o: any) => true);
+                    } else {
+                        console.log("NOT A STRING");
+                    }
                 },
                 onNodeRemoved:  (event: NodeRemoved ) => { console.log("INCOMING NODE REMOVED CHANGE [" + event.relationName + "]")},
                 onNodeAdded:  (event: NodeAdded) => { console.log("INCOMING NODE ADDED CHANGE [" + event.relationName + "] := " + event.child.name)},
                 onReferenceChanged:  (event: ReferenceChanged) => { console.log("INCOMING REFERENCE CHANGE [" + event.referenceName + "] := " + event.referenceValue)},
-                onErrorsForNodeReport:  (event: ErrorsForNodeReport) => { console.log("INCOMING ERRORS FOR NODE [" + event.issues + "]")},
+                onErrorsForNodeReport:  (event: ErrorsForNodeReport) => { console.log("INCOMING ERRORS FOR NODE [" + JSON.stringify(event.issues) + "]")},
                 onErrorsForModelReport:  (event: ErrorsForModelReport) => { console.log("INCOMING ERRORS FOR MODEL [" + event.issues + "]" )}
             })
             console.log("MpsServer.tryToConnect subscribed to changes")
