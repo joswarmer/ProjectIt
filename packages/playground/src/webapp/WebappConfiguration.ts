@@ -17,11 +17,10 @@ import { ServerCommunication } from "./server/ServerCommunication";
 // import { MyExportEnvironment } from "../mps/environment/gen/MyExportEnvironment";
 // export const editorEnvironment: PiEnvironment = MyExportEnvironment.getInstance();
 
-// import { StudyEnvironment } from "../mps/environment/gen/StudyEnvironment";
 import { MpsServerCommunication } from "./server/MpsServerCommunication";
 import { TestLanguageEnvironment } from "../mps/environment/gen/TestLanguageEnvironment";
-// export const editorEnvironment: PiEnvironment = StudyEnvironment.getInstance();
 export const editorEnvironment: PiEnvironment = TestLanguageEnvironment.getInstance();
+
 // import { CalculatorEnvironment } from "../calculator/environment/gen/CalculatorEnvironment";
 // export const editorEnvironment: PiEnvironment = CalculatorEnvironment.getInstance();
 

@@ -66,7 +66,7 @@ export class MpsServer {
         const modulesStatus = await this.client.getModulesStatus();
         console.log("got modules status");
         for (const module of modulesStatus.modules) {
-            if (module.name.startsWith("accenture.study.gen")) {
+            if (module.name.startsWith("org.projectit")) {
                 console.log(" - got module", module.name);
                 const moduleInfos = await this.client.getModuleInfo(module.name)
                 for (const model of moduleInfos) {
@@ -81,7 +81,7 @@ export class MpsServer {
                         console.log("     skipping tests")
                     } else {
                         const answer = await this.client.getInstancesOfConcept(model.qualifiedName,
-                            "accenture.study.WebSocketsAPIsGroup")
+                            "projectit.org.WebSocketsAPIsGroup")
                         const nodes = answer.nodes;
                         nodes.forEach((node: NodeInfo) => {
                             console.log("     APIS group", node.name);

@@ -35,20 +35,4 @@ export class PropertyChangeWorker extends TestLanguageDefaultWorker {
             }
     }
 
-// execBeforeAccenture_study_core_Form(modelelement: Accenture_study_core_Form): boolean {
-    //     if (modelelement.piId() === this.id) {
-    //         modelelement[this.property] = this.value;
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
-    // execBeforeAccenture_study_core_Field(modelelement: Accenture_study_core_Field): boolean {
-    //     if (modelelement.piId() === this.id) {
-    //         modelelement[this.property] = this.value;
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
 }

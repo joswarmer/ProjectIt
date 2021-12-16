@@ -1,4 +1,4 @@
-language Study
+language TestLanguage
 
 concept jetbrains_mps_lang_core_NodeAttribute base jetbrains_mps_lang_core_Attribute {
 }
