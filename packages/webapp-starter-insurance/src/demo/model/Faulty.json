@@ -1,0 +1,570 @@
+{
+   "serializationFormatVersion": "2023.1",
+   "languages": [
+      {
+         "key": "-key-InsuranceModel",
+         "version": "2023.1"
+      }
+   ],
+   "nodes": [
+      {
+         "id": "ID-18",
+         "classifier": {
+            "language": "-key-InsuranceModel",
+            "version": "2023.1",
+            "key": "-key-Part"
+         },
+         "properties": [
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-Part-name"
+               },
+               "value": "Faulty"
+            }
+         ],
+         "containments": [
+            {
+               "containment": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-Part-part"
+               },
+               "children": [
+                  "ID-19"
+               ]
+            }
+         ],
+         "references": [],
+         "annotations": [],
+         "parent": null
+      },
+      {
+         "id": "ID-19",
+         "classifier": {
+            "language": "-key-InsuranceModel",
+            "version": "2023.1",
+            "key": "-key-BaseProduct"
+         },
+         "properties": [
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-BaseProduct-name"
+               },
+               "value": "home201dwqdwq"
+            },
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-BaseProduct-isUnderConstruction"
+               },
+               "value": "false"
+            },
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-BaseProduct-isApprovedLevel1"
+               },
+               "value": "false"
+            },
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-BaseProduct-isApprovedLevel2"
+               },
+               "value": "false"
+            },
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-BaseProduct-isApprovedLevel3"
+               },
+               "value": "false"
+            },
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-BaseProduct-yieldsProfit"
+               },
+               "value": "false"
+            },
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-BaseProduct-range"
+               },
+               "value": "0"
+            },
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-BaseProduct-nrOfUse"
+               },
+               "value": "0"
+            },
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-BaseProduct-date"
+               },
+               "value": "2024-02-06"
+            }
+         ],
+         "containments": [
+            {
+               "containment": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-BaseProduct-parts"
+               },
+               "children": [
+                  "ID-20",
+                  "ID-23",
+                  "ID-26",
+                  "ID-29"
+               ]
+            }
+         ],
+         "references": [
+            {
+               "reference": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-BaseProduct-theme"
+               },
+               "targets": [
+                  {
+                     "resolveInfo": "LegalTheme",
+                     "reference": "ID-12"
+                  }
+               ]
+            }
+         ],
+         "annotations": [],
+         "parent": "ID-18"
+      },
+      {
+         "id": "ID-20",
+         "classifier": {
+            "language": "-key-InsuranceModel",
+            "version": "2023.1",
+            "key": "-key-InsurancePart"
+         },
+         "properties": [
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-InsurancePart-name"
+               },
+               "value": "breakingAndEntering"
+            },
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-InsurancePart-isApproved"
+               },
+               "value": "false"
+            }
+         ],
+         "containments": [
+            {
+               "containment": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-InsurancePart-statisticalRisk"
+               },
+               "children": [
+                  "ID-21"
+               ]
+            },
+            {
+               "containment": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-InsurancePart-maximumPayOut"
+               },
+               "children": [
+                  "ID-22"
+               ]
+            }
+         ],
+         "references": [],
+         "annotations": [],
+         "parent": "ID-19"
+      },
+      {
+         "id": "ID-21",
+         "classifier": {
+            "language": "-key-InsuranceModel",
+            "version": "2023.1",
+            "key": "-key-PercentageLiteral"
+         },
+         "properties": [
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-PercentageLiteral-value"
+               },
+               "value": "20"
+            }
+         ],
+         "containments": [],
+         "references": [],
+         "annotations": [],
+         "parent": "ID-20"
+      },
+      {
+         "id": "ID-22",
+         "classifier": {
+            "language": "-key-InsuranceModel",
+            "version": "2023.1",
+            "key": "-key-EuroLiteral"
+         },
+         "properties": [
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-EuroLiteral-euros"
+               },
+               "value": "250000"
+            },
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-EuroLiteral-cents"
+               },
+               "value": "0"
+            }
+         ],
+         "containments": [],
+         "references": [],
+         "annotations": [],
+         "parent": "ID-20"
+      },
+      {
+         "id": "ID-23",
+         "classifier": {
+            "language": "-key-InsuranceModel",
+            "version": "2023.1",
+            "key": "-key-InsurancePart"
+         },
+         "properties": [
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-InsurancePart-name"
+               },
+               "value": "fire"
+            },
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-InsurancePart-isApproved"
+               },
+               "value": "false"
+            }
+         ],
+         "containments": [
+            {
+               "containment": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-InsurancePart-statisticalRisk"
+               },
+               "children": [
+                  "ID-24"
+               ]
+            },
+            {
+               "containment": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-InsurancePart-maximumPayOut"
+               },
+               "children": [
+                  "ID-25"
+               ]
+            }
+         ],
+         "references": [],
+         "annotations": [],
+         "parent": "ID-19"
+      },
+      {
+         "id": "ID-24",
+         "classifier": {
+            "language": "-key-InsuranceModel",
+            "version": "2023.1",
+            "key": "-key-PercentageLiteral"
+         },
+         "properties": [
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-PercentageLiteral-value"
+               },
+               "value": "12000"
+            }
+         ],
+         "containments": [],
+         "references": [],
+         "annotations": [],
+         "parent": "ID-23"
+      },
+      {
+         "id": "ID-25",
+         "classifier": {
+            "language": "-key-InsuranceModel",
+            "version": "2023.1",
+            "key": "-key-EuroLiteral"
+         },
+         "properties": [
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-EuroLiteral-euros"
+               },
+               "value": "250000"
+            },
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-EuroLiteral-cents"
+               },
+               "value": "0"
+            }
+         ],
+         "containments": [],
+         "references": [],
+         "annotations": [],
+         "parent": "ID-23"
+      },
+      {
+         "id": "ID-26",
+         "classifier": {
+            "language": "-key-InsuranceModel",
+            "version": "2023.1",
+            "key": "-key-InsurancePart"
+         },
+         "properties": [
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-InsurancePart-name"
+               },
+               "value": "flooding"
+            },
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-InsurancePart-isApproved"
+               },
+               "value": "true"
+            }
+         ],
+         "containments": [
+            {
+               "containment": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-InsurancePart-statisticalRisk"
+               },
+               "children": [
+                  "ID-27"
+               ]
+            },
+            {
+               "containment": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-InsurancePart-maximumPayOut"
+               },
+               "children": [
+                  "ID-28"
+               ]
+            }
+         ],
+         "references": [],
+         "annotations": [],
+         "parent": "ID-19"
+      },
+      {
+         "id": "ID-27",
+         "classifier": {
+            "language": "-key-InsuranceModel",
+            "version": "2023.1",
+            "key": "-key-PercentageLiteral"
+         },
+         "properties": [
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-PercentageLiteral-value"
+               },
+               "value": "20"
+            }
+         ],
+         "containments": [],
+         "references": [],
+         "annotations": [],
+         "parent": "ID-26"
+      },
+      {
+         "id": "ID-28",
+         "classifier": {
+            "language": "-key-InsuranceModel",
+            "version": "2023.1",
+            "key": "-key-EuroLiteral"
+         },
+         "properties": [
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-EuroLiteral-euros"
+               },
+               "value": "250000"
+            },
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-EuroLiteral-cents"
+               },
+               "value": "0"
+            }
+         ],
+         "containments": [],
+         "references": [],
+         "annotations": [],
+         "parent": "ID-26"
+      },
+      {
+         "id": "ID-29",
+         "classifier": {
+            "language": "-key-InsuranceModel",
+            "version": "2023.1",
+            "key": "-key-InsurancePart"
+         },
+         "properties": [
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-InsurancePart-name"
+               },
+               "value": "stormAndLightning"
+            },
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-InsurancePart-isApproved"
+               },
+               "value": "true"
+            }
+         ],
+         "containments": [
+            {
+               "containment": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-InsurancePart-statisticalRisk"
+               },
+               "children": [
+                  "ID-30"
+               ]
+            },
+            {
+               "containment": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-InsurancePart-maximumPayOut"
+               },
+               "children": [
+                  "ID-31"
+               ]
+            }
+         ],
+         "references": [],
+         "annotations": [],
+         "parent": "ID-19"
+      },
+      {
+         "id": "ID-30",
+         "classifier": {
+            "language": "-key-InsuranceModel",
+            "version": "2023.1",
+            "key": "-key-PercentageLiteral"
+         },
+         "properties": [
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-PercentageLiteral-value"
+               },
+               "value": "20"
+            }
+         ],
+         "containments": [],
+         "references": [],
+         "annotations": [],
+         "parent": "ID-29"
+      },
+      {
+         "id": "ID-31",
+         "classifier": {
+            "language": "-key-InsuranceModel",
+            "version": "2023.1",
+            "key": "-key-EuroLiteral"
+         },
+         "properties": [
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-EuroLiteral-euros"
+               },
+               "value": "250000"
+            },
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-EuroLiteral-cents"
+               },
+               "value": "0"
+            }
+         ],
+         "containments": [],
+         "references": [],
+         "annotations": [],
+         "parent": "ID-29"
+      }
+   ]
+}

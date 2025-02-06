@@ -1,0 +1,81 @@
+// Overall styles applied to the webapp and the editor in both light and dark mode
+
+// linear-progress is included for the progress indicator in the EditorPart component
+@use '@material/linear-progress/index' as linear-progress;
+@use '@material/typography/mdc-typography';
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+// example of adding icons to a button
+
+// Don't forget to include one of these in webapp-starter/public/index.html:
+//<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/font-awesome.min.css" rel="stylesheet" >
+//<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+// , or import them here:
+//@import 'material-icons/iconfont/material-icons.scss';
+// and add the icons to the node modules by adding this line to the package.json:     "material-icons": "^1.13.12"
+.MyButton-role::after {
+  font-family: 'Material Icons', emoji;
+  content: "\e5d2"; // this number is called the icon's code point in Material
+  color: green;
+  font-size: 25px;
+  rotate: 30deg;
+}
+
+.MyTableButton-role::before {
+  font-family: "Font Awesome 6 Free", emoji;
+  font-weight: 900;
+  //content: 'plus';
+  content: '\2b'; // this number is called the icon's unicode in Font Awesome
+  color: dodgerblue;
+  font-size: 16px;
+  rotate: 30deg;
+}
+
+.MyTableButton-role {
+  min-width: 0.5em !important;
+  min-height: 0.5em !important;
+  border-radius: 50% !important;
+}
+
+// end example of adding icons to a button
+
+// styles for wrapping and replacing native components
+.wrapper {
+  border: 2px groove #666666;
+  border-radius: 8px;
+  background: whitesmoke;
+  padding: 2px;
+}
+.wrapper:focus {
+  background: lightblue;
+}
+
+.replacer {
+  border: 2px groove #666666;
+  border-radius: 8px;
+  background: whitesmoke;
+  padding: 2px;
+}
+.replacer:focus {
+  background: lightblue;
+}
+
+.fragment-component {
+  border: 2px groove #666666;
+  border-radius: 8px;
+  background: blanchedalmond;
+  padding: 2px;
+}
+
+.smui-accordion {
+  width: 800px;
+}
+
+.mdc-layout-grid__inner {
+  grid-template-columns: repeat(20, auto);
+}

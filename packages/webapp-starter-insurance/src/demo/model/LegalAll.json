@@ -1,0 +1,616 @@
+{
+   "serializationFormatVersion": "2023.1",
+   "languages": [
+      {
+         "key": "-key-InsuranceModel",
+         "version": "2023.1"
+      }
+   ],
+   "nodes": [
+      {
+         "id": "ID-205",
+         "classifier": {
+            "language": "-key-InsuranceModel",
+            "version": "2023.1",
+            "key": "-key-Product"
+         },
+         "properties": [
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-Product-name"
+               },
+               "value": "LegalAll"
+            }
+         ],
+         "containments": [
+            {
+               "containment": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-Product-product"
+               },
+               "children": [
+                  "ID-206"
+               ]
+            }
+         ],
+         "references": [],
+         "annotations": [],
+         "parent": null
+      },
+      {
+         "id": "ID-206",
+         "classifier": {
+            "language": "-key-InsuranceModel",
+            "version": "2023.1",
+            "key": "-key-InsuranceProduct"
+         },
+         "properties": [
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-InsuranceProduct-name"
+               },
+               "value": "LegalAll"
+            },
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-InsuranceProduct-productName"
+               },
+               "value": "Careless"
+            }
+         ],
+         "containments": [
+            {
+               "containment": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-InsuranceProduct-advertisedPremium"
+               },
+               "children": [
+                  "ID-207"
+               ]
+            },
+            {
+               "containment": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-InsuranceProduct-calculation"
+               },
+               "children": [
+                  "ID-208"
+               ]
+            },
+            {
+               "containment": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-InsuranceProduct-helpers"
+               },
+               "children": [
+                  "ID-213"
+               ]
+            }
+         ],
+         "references": [
+            {
+               "reference": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-InsuranceProduct-themes"
+               },
+               "targets": [
+                  {
+                     "resolveInfo": "LegalTheme",
+                     "reference": "ID-12"
+                  }
+               ]
+            },
+            {
+               "reference": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-InsuranceProduct-nrPremiumDays"
+               },
+               "targets": [
+                  {
+                     "resolveInfo": "Month",
+                     "reference": "ID-14"
+                  }
+               ]
+            },
+            {
+               "reference": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-InsuranceProduct-parts"
+               },
+               "targets": [
+                  {
+                     "resolveInfo": "damageToOtherPersonsProperty",
+                     "reference": "ID-199"
+                  },
+                  {
+                     "resolveInfo": "damageToOtherPersonsHealth",
+                     "reference": "ID-202"
+                  },
+                  {
+                     "resolveInfo": "hospitalization",
+                     "reference": null
+                  }
+               ]
+            },
+            {
+               "reference": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-InsuranceProduct-basedOn"
+               },
+               "targets": [
+                  {
+                     "resolveInfo": "legal1",
+                     "reference": "ID-198"
+                  }
+               ]
+            }
+         ],
+         "annotations": [],
+         "parent": "ID-205"
+      },
+      {
+         "id": "ID-207",
+         "classifier": {
+            "language": "-key-InsuranceModel",
+            "version": "2023.1",
+            "key": "-key-EuroLiteral"
+         },
+         "properties": [
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-EuroLiteral-euros"
+               },
+               "value": "2000"
+            },
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-EuroLiteral-cents"
+               },
+               "value": "0"
+            }
+         ],
+         "containments": [],
+         "references": [],
+         "annotations": [],
+         "parent": "ID-206"
+      },
+      {
+         "id": "ID-208",
+         "classifier": {
+            "language": "-key-InsuranceModel",
+            "version": "2023.1",
+            "key": "-key-PlusExpression"
+         },
+         "properties": [],
+         "containments": [
+            {
+               "containment": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-BinaryExpression-left"
+               },
+               "children": [
+                  "ID-209"
+               ]
+            },
+            {
+               "containment": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-BinaryExpression-right"
+               },
+               "children": [
+                  "ID-211"
+               ]
+            }
+         ],
+         "references": [],
+         "annotations": [],
+         "parent": "ID-206"
+      },
+      {
+         "id": "ID-209",
+         "classifier": {
+            "language": "-key-InsuranceModel",
+            "version": "2023.1",
+            "key": "-key-FunctionCallExpression"
+         },
+         "properties": [],
+         "containments": [
+            {
+               "containment": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-FunctionCallExpression-args"
+               },
+               "children": [
+                  "ID-210"
+               ]
+            }
+         ],
+         "references": [
+            {
+               "reference": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-FunctionCallExpression-funcDefinition"
+               },
+               "targets": [
+                  {
+                     "resolveInfo": "calc",
+                     "reference": "ID-213"
+                  }
+               ]
+            }
+         ],
+         "annotations": [],
+         "parent": "ID-208"
+      },
+      {
+         "id": "ID-210",
+         "classifier": {
+            "language": "-key-InsuranceModel",
+            "version": "2023.1",
+            "key": "-key-InsurancePartRef"
+         },
+         "properties": [],
+         "containments": [],
+         "references": [
+            {
+               "reference": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-InsurancePartRef-part"
+               },
+               "targets": [
+                  {
+                     "resolveInfo": "damageToOtherPersonsProperty",
+                     "reference": "ID-199"
+                  }
+               ]
+            }
+         ],
+         "annotations": [],
+         "parent": "ID-209"
+      },
+      {
+         "id": "ID-211",
+         "classifier": {
+            "language": "-key-InsuranceModel",
+            "version": "2023.1",
+            "key": "-key-FunctionCallExpression"
+         },
+         "properties": [],
+         "containments": [
+            {
+               "containment": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-FunctionCallExpression-args"
+               },
+               "children": [
+                  "ID-212"
+               ]
+            }
+         ],
+         "references": [
+            {
+               "reference": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-FunctionCallExpression-funcDefinition"
+               },
+               "targets": [
+                  {
+                     "resolveInfo": "calc",
+                     "reference": "ID-213"
+                  }
+               ]
+            }
+         ],
+         "annotations": [],
+         "parent": "ID-208"
+      },
+      {
+         "id": "ID-212",
+         "classifier": {
+            "language": "-key-InsuranceModel",
+            "version": "2023.1",
+            "key": "-key-InsurancePartRef"
+         },
+         "properties": [],
+         "containments": [],
+         "references": [
+            {
+               "reference": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-InsurancePartRef-part"
+               },
+               "targets": [
+                  {
+                     "resolveInfo": "damageToOtherPersonsHealth",
+                     "reference": "ID-202"
+                  }
+               ]
+            }
+         ],
+         "annotations": [],
+         "parent": "ID-211"
+      },
+      {
+         "id": "ID-213",
+         "classifier": {
+            "language": "-key-InsuranceModel",
+            "version": "2023.1",
+            "key": "-key-CalcFunction"
+         },
+         "properties": [
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-CalcFunction-name"
+               },
+               "value": "calc"
+            }
+         ],
+         "containments": [
+            {
+               "containment": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-CalcFunction-declaredType"
+               },
+               "children": [
+                  "ID-214"
+               ]
+            },
+            {
+               "containment": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-CalcFunction-body"
+               },
+               "children": [
+                  "ID-215"
+               ]
+            },
+            {
+               "containment": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-CalcFunction-parameters"
+               },
+               "children": [
+                  "ID-219"
+               ]
+            }
+         ],
+         "references": [],
+         "annotations": [],
+         "parent": "ID-206"
+      },
+      {
+         "id": "ID-214",
+         "classifier": {
+            "language": "-key-InsuranceModel",
+            "version": "2023.1",
+            "key": "-key-TypeRef"
+         },
+         "properties": [],
+         "containments": [],
+         "references": [
+            {
+               "reference": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-TypeRef-type"
+               },
+               "targets": [
+                  {
+                     "resolveInfo": "EUR",
+                     "reference": "ID-9"
+                  }
+               ]
+            }
+         ],
+         "annotations": [],
+         "parent": "ID-213"
+      },
+      {
+         "id": "ID-215",
+         "classifier": {
+            "language": "-key-InsuranceModel",
+            "version": "2023.1",
+            "key": "-key-MultiplyExpression"
+         },
+         "properties": [],
+         "containments": [
+            {
+               "containment": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-BinaryExpression-left"
+               },
+               "children": [
+                  "ID-216"
+               ]
+            },
+            {
+               "containment": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-BinaryExpression-right"
+               },
+               "children": [
+                  "ID-218"
+               ]
+            }
+         ],
+         "references": [],
+         "annotations": [],
+         "parent": "ID-213"
+      },
+      {
+         "id": "ID-216",
+         "classifier": {
+            "language": "-key-InsuranceModel",
+            "version": "2023.1",
+            "key": "-key-ParameterRef"
+         },
+         "properties": [],
+         "containments": [
+            {
+               "containment": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-ParameterRef-attribute"
+               },
+               "children": [
+                  "ID-217"
+               ]
+            }
+         ],
+         "references": [
+            {
+               "reference": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-ParameterRef-parameter"
+               },
+               "targets": [
+                  {
+                     "resolveInfo": "part",
+                     "reference": "ID-219"
+                  }
+               ]
+            }
+         ],
+         "annotations": [],
+         "parent": "ID-215"
+      },
+      {
+         "id": "ID-217",
+         "classifier": {
+            "language": "-key-InsuranceModel",
+            "version": "2023.1",
+            "key": "-key-PayoutRef"
+         },
+         "properties": [
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-PayoutRef-name"
+               },
+               "value": "maximumPayOut"
+            }
+         ],
+         "containments": [],
+         "references": [],
+         "annotations": [],
+         "parent": "ID-216"
+      },
+      {
+         "id": "ID-218",
+         "classifier": {
+            "language": "-key-InsuranceModel",
+            "version": "2023.1",
+            "key": "-key-PercentageLiteral"
+         },
+         "properties": [
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-PercentageLiteral-value"
+               },
+               "value": "10"
+            }
+         ],
+         "containments": [],
+         "references": [],
+         "annotations": [],
+         "parent": "ID-215"
+      },
+      {
+         "id": "ID-219",
+         "classifier": {
+            "language": "-key-InsuranceModel",
+            "version": "2023.1",
+            "key": "-key-Parameter"
+         },
+         "properties": [
+            {
+               "property": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-Parameter-name"
+               },
+               "value": "part"
+            }
+         ],
+         "containments": [
+            {
+               "containment": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-Parameter-declaredType"
+               },
+               "children": [
+                  "ID-220"
+               ]
+            }
+         ],
+         "references": [],
+         "annotations": [],
+         "parent": "ID-213"
+      },
+      {
+         "id": "ID-220",
+         "classifier": {
+            "language": "-key-InsuranceModel",
+            "version": "2023.1",
+            "key": "-key-TypeRef"
+         },
+         "properties": [],
+         "containments": [],
+         "references": [
+            {
+               "reference": {
+                  "language": "-key-InsuranceModel",
+                  "version": "2023.1",
+                  "key": "-key-TypeRef-type"
+               },
+               "targets": [
+                  {
+                     "resolveInfo": "InsurancePart",
+                     "reference": "ID-5"
+                  }
+               ]
+            }
+         ],
+         "annotations": [],
+         "parent": "ID-219"
+      }
+   ]
+}

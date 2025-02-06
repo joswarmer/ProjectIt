@@ -1,8 +1,5 @@
 ### Editor Misc
 
-- [ ] When a type of a property cannot be found the error message is rather unclear: (A)
-    -  `ERROR: Element 'correctAnswer' should have a type`
-
 - [ ] in context menu 'add' make base class available (only if concrete)
 
 - [ ] maybe add the option to include a vertical line left to an indent component
@@ -18,8 +15,7 @@
 - [ ] Enable special projection per element (selectable by the user)
 
 - [ ] How to show for a single word boolean that something can be added/changed
-- [x] For an optional edit part have different user defined projections for show / now show
-    - [x] For e.g. "[?extends ${extends>]" show just the ${extends} for now show.
+
 - [ ] Tables with different types of nodes do not work now, all nodes must be of the same concept.
     - [x]  Lists are ok with different types, but they do not have to have the columns defined
     - [ ] Tables are probably impossible, use grid instead.

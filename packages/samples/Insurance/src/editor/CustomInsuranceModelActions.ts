@@ -4,8 +4,9 @@ import {
     FreCustomAction,
     FreCombinedActions,
     Box,
-    FreTriggerType, FreEditor, FreNode
+    FreTriggerType, FreEditor, FreNode, FreTriggerUse, isString, ActionBox, RoleProvider, FreCaret
 } from "@freon4dsl/core";
+import { NumberLiteral } from "../language/gen/index.js";
 
 /**
  * Class CustomInsuranceModelActions provides an entry point for the language engineer to
@@ -47,4 +48,22 @@ export const MANUAL_CUSTOM_ACTIONS: FreCustomAction[] = [
             return null;
         },
     }),
-];
+    FreCustomAction.create({
+        activeInBoxRoles: [
+            "CalcFunction-body",
+            "FreBinaryExpression-left",
+            "FreBinaryExpression-right",
+        ],
+        trigger: /[0-9]/,
+        action: (box: Box, trigger: FreTriggerUse, editor: FreEditor) => {
+            const parent = box.node;
+            const x = new NumberLiteral();
+            if( isString(trigger) ) {
+                x.value = Number.parseInt(trigger.toString());
+            }
+            parent[(box as ActionBox).propertyName] = x;
+            return x;
+        },
+        boxRoleToSelect: RoleProvider.property("NumberLiteral", "value", "numberbox"),
+        caretPosition: FreCaret.RIGHT_MOST
+    })];

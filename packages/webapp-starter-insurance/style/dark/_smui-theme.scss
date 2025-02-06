@@ -1,0 +1,8 @@
+// NOTE: This file needs to have the name 'smui-theme' in order for the 'prepare' command to function.
+// Unfortunately, the preprocessor expects this file name.
+
+// The entries in this file handle everything that has to do with colors in the 'light' theme mode.
+
+@use '../../../../node_modules/@freon4dsl/core-svelte/dist/styles/freon.css';
+@use '../../../../node_modules/@freon4dsl/core-svelte/dist/styles/freon-dark.css';
+@use 'app_theme-dark';

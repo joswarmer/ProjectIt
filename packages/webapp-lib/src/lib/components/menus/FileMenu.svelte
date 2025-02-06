@@ -27,7 +27,10 @@
 <!-- `file_selector` is a hidden element to be able to show a file selection browser -->
 <!-- The `multiple` attribute lets users select multiple files. -->
 <!-- The `accept` attribute sets the file extensions that are allowed.  -->
-<input class:file_selector bind:this={file_selector} {...file_selector_props} on:change={process_files}>
+
+{#if !WebappConfigurator.getInstance().isDemo}
+	<input class:file_selector bind:this={file_selector} {...file_selector_props} on:change={process_files}>
+{/if}
 
 <script lang="ts">
 	import { type ModelUnitIdentifier } from "@freon4dsl/core";
@@ -83,7 +86,7 @@
 
     // new model menuitem
     const changeModel = async () => {
-		// console.log("FileMenu.changeModel");
+		console.log("FileMenu.changeModel");
         // get list of models from server
         const names = await WebappConfigurator.getInstance().serverCommunication.loadModelList()
 		if (names && names.length > 0) {
@@ -96,7 +99,7 @@
 
     // new unit menuitem
     const newUnit = async () => {
-		// console.log("FileMenu.newUnit");
+		console.log("FileMenu.newUnit");
 		if (!!$currentModelName && $currentModelName.length > 0) {
 			// get list of units from server, because new unit may not have the same name as an existing one
 			const names: ModelUnitIdentifier[] = await WebappConfigurator.getInstance().serverCommunication.loadUnitList($currentModelName);
@@ -114,7 +117,7 @@
 
     // save unit menuitem
     const saveUnit = () => {
-        // console.log("FileMenu.saveUnit: " + $currentUnitName);
+        console.log("FileMenu.saveUnit: " + $currentUnitName);
 		if ($currentUnitName) {
 			EditorState.getInstance().saveCurrentUnit();
 			setUserMessage(`Unit '${$currentUnitName.name}' saved.`);
@@ -125,7 +128,7 @@
 
     // delete model menuitem
     const deleteModel = async () => {
-        // console.log("FileMenu.deleteModel");
+        console.log("FileMenu.deleteModel");
         // get list of models from server
 		const names = await WebappConfigurator.getInstance().serverCommunication.loadModelList()
 		// if list not empty, show dialog
@@ -138,11 +141,13 @@
 
     // import model unit menuitem
     const importUnit = () => {
+		console.log("importUnit")
         // open the file browse dialog
-        file_selector.click();
+        file_selector?.click();
     }
 
     const process_files = (event) => {
+		console.log("process_files")
         const fileList: FileList = event.target.files;
         new ImportExportHandler().importUnits(fileList);
     }

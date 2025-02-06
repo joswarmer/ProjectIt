@@ -21,7 +21,7 @@
         MenuOptionsType,
         moveListElement,
         FreEditor,
-        FreLogger
+        FreLogger, isReferenceBox, isLabelBox, isHorizontalBox
     } from "@freon4dsl/core";
     import RenderComponent from "./RenderComponent.svelte";
     import {
@@ -123,7 +123,14 @@
         return false; // cancels 'normal' browser handling, more or less like preventDefault, present to avoid type error
     };
 
-    function showContextMenu(event, index: number) {
+    function showContextMenu(event: MouseEvent, index: number) {
+        event.preventDefault();
+        // TODO Hack to avoid separator and terminator problems.
+        if (box.children.some(ch => isLabelBox(ch))) {
+            console.log(" ./.. skipping")
+            return;
+        }
+        event.stopPropagation();
         if (index >= 0 && index <= shownElements.length) {
             const elemBox: Box = shownElements[index];
             if (editor.selectedBox !== elemBox) {
@@ -202,7 +209,7 @@
       style:grid-template-columns="{!isHorizontal ? 1 : shownElements.length}"
       style:grid-template-rows="{isHorizontal ? 1 : shownElements.length}"
 >
-    {#each shownElements as box, index (box.id)}
+    {#each shownElements as box1, index (box1.id)}
         <span
                 class="list-item"
                 class:is-active={$activeElem?.row === index && $activeIn === id}
@@ -219,11 +226,11 @@
                 on:dragleave|stopPropagation={(event) => dragleave(event, index)}
                 on:mouseout|stopPropagation={mouseout}
                 on:focus={() => {}}
-                on:blur={() => {}}
-                on:contextmenu|stopPropagation|preventDefault={(event) => showContextMenu(event, index)}
+                on:blur={() => {$contextMenu.hide()}}
+                on:contextmenu={(event) => showContextMenu(event, index)}
                 role="none"
         >
-            <RenderComponent box={box} editor={editor}/>
+            <RenderComponent box={box1} editor={editor}/>
 		</span>
     {/each}
 </span>

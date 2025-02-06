@@ -1,0 +1,61 @@
+@use 'sass:color';
+
+@use '@material/theme/color-palette';
+
+// Freon Colors!! (Dark Theme)
+@use '@material/theme/index' as theme with (
+  $primary: #00695c,
+  $secondary: color.scale(#b53d00, $whiteness: +20%),
+  $surface: color-palette.$grey-900,
+  $background: #000,
+  $error: #B00020,
+  //$on-primary: #ffffb0,
+  //$on-primary: purple,     // a slighter darker version of 'secondary'
+  $on-secondary: #4f9a94,   // a slighter darker version of 'primary'
+  $on-surface: color-palette.$grey-300,
+  //$on-error: black,
+  //accessible-ink-color,
+  //contrast,
+  //contrast-tone,
+  //luminance,
+  //text-emphasis,
+  //tone
+);
+
+// Include all the global styles that do not involve dark/light modes.
+@use '../app';
+
+// linear-progress is included for the progress indicator in the EditorPart component
+@use '@material/linear-progress/index' as linear-progress;
+
+// my-colored-bar style is used for the progress indicator in the EditorPart component
+.my-colored-bar {
+  @include linear-progress.bar-color(theme.$red-500);
+  @include linear-progress.buffer-color(theme.$red-100);
+}
+
+// status-bar style is used for the StatusBar component above the editor
+.status-bar {
+  //--freon-colors-bg-status: #4f9a94;
+  --freon-colors-bg-status: #4f9a94;
+  --freon-colors-text-status: white;
+  --freon-text-style-status: italic;
+}
+
+.main-frame {
+  /* SplitPane divider */
+  --freon-colors-slider: #{theme.$on-secondary};    /* The color of the slider between the error/search pane and the editor */
+}
+
+html,
+body {
+  background-color: theme.$surface;
+  color: theme.$on-surface;
+  --mdc-theme-primary: #{theme.$primary};
+}
+
+.freon-component {
+  background-color: #111928; // #{gc.$mac-gray-900};
+  color: #EBEEF0; // #{gc.$mac-gray-200};
+
+}

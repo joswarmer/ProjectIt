@@ -31,16 +31,16 @@ InsurancePart{
     Insurance Part ${self.name}
         risk assessment: ${self.statisticalRisk}
         maximum payout: ${self.maximumPayOut}
-        is approved: ${self.isApproved [JA | NEE]}
+        is approved: ${self.isApproved [YES | NO]}
 ]
 }
 
 InsuranceProduct {[
-    Insurance Product ${name} ( public name: ${productName} ) USES ${basedOn horizontal separator[, ]}
-        Themes: ${themes horizontal separator[, ]}
+    Insurance Product ${name} ( public name: ${productName} ) USES ${basedOn horizontal }
+        Themes: ${themes horizontal }
         Premium: ${advertisedPremium} per ${nrPremiumDays}
         Insured risks:
-            ${parts vertical terminator [;]}
+            ${parts vertical}
         Calculation
             [? Risk adjusted by = ${riskAdjustment} ]
             calculated premium: ${calculation}
@@ -50,7 +50,7 @@ InsuranceProduct {[
 
 CalcFunction {
     [
-        ${name} ( ${parameters horizontal separator[,]} ): ${declaredType} {
+        ${name} ( ${parameters horizontal} ): ${declaredType} {
             ${body}
         }
     ]

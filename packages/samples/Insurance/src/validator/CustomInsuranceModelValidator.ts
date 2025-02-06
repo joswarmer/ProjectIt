@@ -4,7 +4,7 @@ import { InsuranceModelDefaultWorker } from "../utils/gen/InsuranceModelDefaultW
 import { InsuranceModelCheckerInterface } from "./gen/InsuranceModelValidator.js";
 import { EuroType, MultiplyExpression, NumberType, PercentageType, Product } from '../language/gen/index.js';
 import { CustomInsuranceModelTyperPart } from '../typer/index.js';
-import { InsuranceModelEnvironment } from '../config/gen/InsuranceModelEnvironment.js';
+import { LanguageEnvironment } from '../index.js';
 
 export class CustomInsuranceModelValidator extends InsuranceModelDefaultWorker implements InsuranceModelCheckerInterface {
     errorList: FreError[] = [];
@@ -22,7 +22,7 @@ export class CustomInsuranceModelValidator extends InsuranceModelDefaultWorker i
     public execBeforeMultiplyExpression(modelelement: MultiplyExpression): boolean {
         CustomInsuranceModelTyperPart.fromValidator = true;
         const typer: FreTyper = FreLanguageEnvironment.getInstance().typer;
-        const writer: FreWriter = InsuranceModelEnvironment.getInstance().writer;
+        const writer: FreWriter = LanguageEnvironment.getInstance().writer;
         let hasFatalError: boolean = false;
         // @typecheck equalsType( self.left, self.right )
         const leftType0 = typer.inferType(modelelement.left);

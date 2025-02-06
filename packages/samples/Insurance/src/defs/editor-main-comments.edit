@@ -34,14 +34,14 @@ InsurancePart{
 }
 
 InsuranceProduct {[
-    Insurance Product ${name} ( public name: ${productName} ) USES ${basedOn horizontal separator[, ]}
+    Insurance Product ${name} ( public name: ${productName} ) USES ${basedOn horizontal}
             /* An insurance product defines a combination of to be insured events that are packaged as a sellable product. */
-        Themes: ${themes horizontal separator[, ]}
+        Themes: ${themes horizontal }
             /* Themes gives a list of types of insurance parts that are packaged in this product. */
         Premium: ${advertisedPremium} per ${nrPremiumDays}
             /* Premium is the income by selling this product per part of the year. */
         Insured risks: /* The packaged insured events. */
-            ${parts vertical terminator [;]}
+            ${parts vertical }
         Calculation
             [? Risk adjusted by = ${riskAdjustment}
                 /* Risk adjustment is used to change the calculation, because the
@@ -54,7 +54,7 @@ InsuranceProduct {[
 
 CalcFunction {
     [
-        ${name} ( ${parameters horizontal separator[,]} ): ${declaredType} {
+        ${name} ( ${parameters horizontal} ): ${declaredType} {
             /* ${description} */
             ${body}
         }

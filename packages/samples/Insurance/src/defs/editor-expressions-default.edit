@@ -28,7 +28,7 @@ DivideExpression {
     symbol = "/"
 }
 FunctionCallExpression {
-    [${funcDefinition} ( ${args horizontal separator[,] } )]
+    [${funcDefinition} ( ${args horizontal  } )]
     referenceShortcut = ${funcDefinition}
     trigger = "calc"
 }
@@ -51,7 +51,7 @@ PayoutRef {
 }
 GenericLiteral {
     // Set{ 12, 14, 16, 18 }
-    [${kind}{ ${content horizontal separator[,]} }]
+    [${kind}{ ${content horizontal } }]
     referenceShortcut = ${self.kind}
 }
 TypeRef {

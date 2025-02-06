@@ -62,6 +62,7 @@
     "packages/webapp-lib",
     "packages/samples/*",
     "packages/webapp-starter",
+    "packages/webapp-starter-insurance",
     "packages/server",
     "packages/test"
   ],
